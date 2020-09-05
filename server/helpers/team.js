@@ -3,18 +3,17 @@ const { team } = require("../objects/team");
 
 const addPlayer = (player) => {
     const { maxMinutes } = constants;
-    const { players, totalMinutesPlayed } = team;
-    if (totalMinutesPlayed + player.minutes_played <= maxMinutes) {
-        players.push(player);
+    if (team.totalMinutesPlayed + player.minutes_played <= maxMinutes) {
+        team.players.push(player);
         team.totalMinutesPlayed += player.minutes_played;
+        team.totalWins += player.win_shares;
     }
     return team;
 };
 
 const checkPositionCount = (position) => {
     const { maxPositionCount } = constants;
-    const { players } = team;
-    let currentNumberOfPosition = players.reduce((acc, player) => {
+    let currentNumberOfPosition = team.players.reduce((acc, player) => {
         if (player.position === position) {
             acc++;
         }
