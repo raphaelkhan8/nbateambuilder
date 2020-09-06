@@ -17,7 +17,7 @@
         "client-start": "react-scripts start",
         "build": "react-scripts build",
         "start": "node server/index.js",
-        "client-test": "react-scripts test",
+        "test": "react-scripts test",
         "client-eject": "react-scripts eject"
     },
     "proxy": "http://localhost:5000",
