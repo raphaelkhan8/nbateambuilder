@@ -7,8 +7,18 @@ const addPlayer = (player) => {
         team.players.push(player);
         team.totalMinutesPlayed += player.minutes_played;
         team.minutesAvailable = maxMinutes - team.totalMinutesPlayed;
-        (team.totalWins += player.win_shares).toFixed(1);
+        team.totalWins += player.win_shares;
     }
+    return team;
+};
+
+const releasePlayer = (releasedPlayer) => {
+    team.players = team.players.filter(
+        (player) => player.name !== releasedPlayer.name
+    );
+    team.totalMinutesPlayed -= releasedPlayer.minutes_played;
+    team.minutesAvailable += releasedPlayer.minutes_played;
+    team.totalWins -= releasedPlayer.win_shares;
     return team;
 };
 
@@ -24,4 +34,5 @@ const checkPositionCount = (position) => {
 };
 
 module.exports.addPlayer = addPlayer;
+module.exports.releasePlayer = releasePlayer;
 module.exports.checkPositionCount = checkPositionCount;

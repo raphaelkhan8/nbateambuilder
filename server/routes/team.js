@@ -1,5 +1,9 @@
 const express = require("express");
-const { checkPositionCount, addPlayer } = require("../helpers/team");
+const {
+    checkPositionCount,
+    addPlayer,
+    releasePlayer,
+} = require("../helpers/team");
 const { team } = require("../objects/team");
 
 const router = new express.Router();
@@ -13,6 +17,12 @@ router.post("/addPlayer", (req, res) => {
     if (checkPositionCount(player.position)) {
         addPlayer(player);
     }
+    res.send(team);
+});
+
+router.post("/releasePlayer", (req, res) => {
+    const { player } = req.body;
+    releasePlayer(player);
     res.send(team);
 });
 

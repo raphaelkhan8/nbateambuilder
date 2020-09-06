@@ -59,11 +59,32 @@ class App extends Component {
         axios
             .post("/addPlayer", { player: selectedPlayer })
             .then((res) => {
-                console.log("TEAM: ", res);
+                const { position, name } = selectedPlayer;
+                let pos = position.toLowerCase() + "s";
                 this.setState({
                     team: res.data.players,
-                    teamWins: res.data.totalWins,
+                    teamWins: res.data.totalWins.toFixed(1),
                     teamMinutesLeft: res.data.minutesAvailable,
+                    [pos]: this.state[pos].filter(
+                        (player) => player.name !== name
+                    ),
+                });
+            })
+            .catch((err) => console.error(err));
+    };
+
+    releasePlayer = (selectedPlayer) => {
+        axios
+            .post("/releasePlayer", { player: selectedPlayer })
+            .then((res) => {
+                console.log(selectedPlayer);
+                let pos = selectedPlayer.position.toLowerCase() + "s";
+                console.log("POS", pos);
+                this.setState({
+                    team: res.data.players,
+                    teamWins: res.data.totalWins.toFixed(1),
+                    teamMinutesLeft: res.data.minutesAvailable,
+                    [pos]: this.state[pos].concat(selectedPlayer),
                 });
             })
             .catch((err) => console.error(err));
@@ -89,7 +110,10 @@ class App extends Component {
                         <h3>Wins: {teamWins}</h3>
                         <h4>Minutes Left: {teamMinutesLeft}</h4>
                         {team.map((player) => (
-                            <Team player={player} />
+                            <Team
+                                player={player}
+                                releasePlayer={this.releasePlayer}
+                            />
                         ))}
                     </div>
                 ) : (
