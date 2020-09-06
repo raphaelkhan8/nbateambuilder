@@ -5,6 +5,7 @@ import {
     PowerForwards,
     SmallForwards,
     ShootingGuards,
+    Team,
 } from "./Components/index";
 import "./App.css";
 import axios from "axios";
@@ -18,6 +19,7 @@ class App extends Component {
             smallForwards: [],
             shootingGuards: [],
             pointGuards: [],
+            team: [],
         };
     }
 
@@ -41,6 +43,26 @@ class App extends Component {
             .catch((err) => console.error(err));
     };
 
+    getTeam = () => {
+        let ctx = this;
+        axios
+            .get("/getTeam")
+            .then((team) => {
+                ctx.setState({ team });
+            })
+            .catch((err) => console.error(err));
+    };
+
+    addPlayer = (selectedPlayer) => {
+        axios
+            .post("/addPlayer", { player: selectedPlayer })
+            .then((res) => {
+                console.log("TEAM: ", res);
+                this.setState({ team: res.data.players });
+            })
+            .catch((err) => console.error(err));
+    };
+
     render() {
         const {
             centers,
@@ -48,10 +70,22 @@ class App extends Component {
             smallForwards,
             shootingGuards,
             pointGuards,
+            team,
         } = this.state;
 
         return (
             <div className="App">
+                <h1>My Team</h1>
+                {team.length ? (
+                    <div id="team">
+                        <h2>My Team</h2>
+                        {team.map((player) => (
+                            <Team player={player} />
+                        ))}
+                    </div>
+                ) : (
+                    <div>Add a player to your team</div>
+                )}
                 <h1>Player List</h1>
                 {Object.keys(centers).length ? (
                     <div id="players">
