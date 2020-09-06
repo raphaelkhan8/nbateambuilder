@@ -6,7 +6,8 @@ const addPlayer = (player) => {
     if (team.totalMinutesPlayed + player.minutes_played <= maxMinutes) {
         team.players.push(player);
         team.totalMinutesPlayed += player.minutes_played;
-        team.totalWins += player.win_shares;
+        team.minutesAvailable = maxMinutes - team.totalMinutesPlayed;
+        (team.totalWins += player.win_shares).toFixed(1);
     }
     return team;
 };

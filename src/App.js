@@ -20,6 +20,8 @@ class App extends Component {
             shootingGuards: [],
             pointGuards: [],
             team: [],
+            teamWins: 0,
+            teamMinutesLeft: 0,
         };
     }
 
@@ -58,7 +60,11 @@ class App extends Component {
             .post("/addPlayer", { player: selectedPlayer })
             .then((res) => {
                 console.log("TEAM: ", res);
-                this.setState({ team: res.data.players });
+                this.setState({
+                    team: res.data.players,
+                    teamWins: res.data.totalWins,
+                    teamMinutesLeft: res.data.minutesAvailable,
+                });
             })
             .catch((err) => console.error(err));
     };
@@ -71,14 +77,17 @@ class App extends Component {
             shootingGuards,
             pointGuards,
             team,
+            teamWins,
+            teamMinutesLeft,
         } = this.state;
 
         return (
             <div className="App">
-                <h1>My Team</h1>
+                <h2>My Team</h2>
                 {team.length ? (
                     <div id="team">
-                        <h2>My Team</h2>
+                        <h3>Wins: {teamWins}</h3>
+                        <h4>Minutes Left: {teamMinutesLeft}</h4>
                         {team.map((player) => (
                             <Team player={player} />
                         ))}
