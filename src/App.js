@@ -62,7 +62,6 @@ class App extends Component {
             .then((res) => {
                 const { position, name } = selectedPlayer;
                 let pos = position.toLowerCase() + "s";
-                console.log(res);
                 this.setState({
                     team: res.data.players,
                     teamWins: res.data.totalWins.toFixed(1),
@@ -82,9 +81,7 @@ class App extends Component {
         axios
             .post("/releasePlayer", { player: selectedPlayer })
             .then((res) => {
-                console.log(selectedPlayer);
                 let pos = selectedPlayer.position.toLowerCase() + "s";
-                console.log("POS", pos);
                 this.setState({
                     team: res.data.players,
                     teamWins: res.data.totalWins.toFixed(1),

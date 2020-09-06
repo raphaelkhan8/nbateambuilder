@@ -12,7 +12,6 @@ const addPlayer = (player) => {
         team.averageAge =
             (team.averageAge * numOfPlayers + player.age) / (numOfPlayers + 1);
     }
-    console.log("TEAM", team);
     return team;
 };
 
