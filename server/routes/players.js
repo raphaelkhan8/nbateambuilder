@@ -1,10 +1,13 @@
 const express = require("express");
-const { playersByPosition } = require("../objects/player");
+const { getPlayers, groupPlayers } = require("../helpers/players");
 
 const router = new express.Router();
 
-router.get("/getPlayers", (req, res) => {
-    res.send(playersByPosition);
+router.get("/getPlayers/:year", async (req, res) => {
+    const { year } = req.params;
+    const players = await getPlayers(Number(year));
+    const groupedPlayers = groupPlayers(players);
+    res.send(groupedPlayers);
 });
 
 module.exports.playerRouter = router;

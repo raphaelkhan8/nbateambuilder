@@ -14,6 +14,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            inputYear: "",
             centers: [],
             power_forwards: [],
             small_forwards: [],
@@ -27,12 +28,16 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.getPlayerList();
+        // this.getPlayerList();
     }
 
-    getPlayerList = () => {
+    handleChange = (event) => {
+        this.setState({ inputYear: event.target.value });
+    };
+
+    getPlayerList = (year) => {
         return axios
-            .get("/getPlayers")
+            .get(`/getPlayers/${year}`)
             .then((playerList) => {
                 const { data } = playerList;
                 this.setState({
@@ -44,6 +49,14 @@ class App extends Component {
                 });
             })
             .catch((err) => console.error(err));
+    };
+
+    handleSubmit = (event) => {
+        alert(
+            "Player data from " + this.state.inputYear + " is being fetched."
+        );
+        event.preventDefault();
+        this.getPlayerList(this.state.inputYear);
     };
 
     getTeam = () => {
@@ -86,6 +99,9 @@ class App extends Component {
                     team: res.data.players,
                     teamWins: res.data.totalWins.toFixed(1),
                     teamMinutesLeft: res.data.minutesAvailable,
+                    averageAge: Number.isInteger(res.data.averageAge)
+                        ? res.data.averageAge
+                        : res.data.averageAge.toFixed(2),
                     [pos]: this.state[pos].concat(selectedPlayer),
                 });
             })
@@ -94,6 +110,7 @@ class App extends Component {
 
     render() {
         const {
+            inputYear,
             centers,
             power_forwards,
             small_forwards,
@@ -124,6 +141,16 @@ class App extends Component {
                 ) : (
                     <div>Add a player to your team</div>
                 )}
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        NBA Season:
+                        <textarea
+                            value={inputYear}
+                            onChange={this.handleChange}
+                        />
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
                 <h1>Player List</h1>
                 {Object.keys(centers).length ? (
                     <div id="players">
