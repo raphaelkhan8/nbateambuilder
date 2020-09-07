@@ -1,5 +1,11 @@
 const { constants } = require("../helpers/constants");
-const { team } = require("../objects/team");
+
+const team = {
+    players: [],
+    totalMinutesPlayed: 0,
+    totalWins: 0,
+    averageAge: 0,
+};
 
 const addPlayer = (player) => {
     const { maxMinutes } = constants;
@@ -16,12 +22,16 @@ const addPlayer = (player) => {
 };
 
 const releasePlayer = (releasedPlayer) => {
+    let numOfPlayers = team.players.length;
     team.players = team.players.filter(
         (player) => player.name !== releasedPlayer.name
     );
     team.totalMinutesPlayed -= releasedPlayer.minutes_played;
     team.minutesAvailable += releasedPlayer.minutes_played;
     team.totalWins -= releasedPlayer.win_shares;
+    team.averageAge =
+        (team.averageAge * numOfPlayers - releasedPlayer.age) /
+        (numOfPlayers - 1);
     return team;
 };
 
@@ -39,3 +49,4 @@ const checkPositionCount = (position) => {
 module.exports.addPlayer = addPlayer;
 module.exports.releasePlayer = releasePlayer;
 module.exports.checkPositionCount = checkPositionCount;
+module.exports.team = team;

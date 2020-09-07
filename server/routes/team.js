@@ -3,8 +3,8 @@ const {
     checkPositionCount,
     addPlayer,
     releasePlayer,
+    team,
 } = require("../helpers/team");
-const { team } = require("../objects/team");
 
 const router = new express.Router();
 
