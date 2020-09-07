@@ -1,4 +1,6 @@
 # this file isn't used but you can get player data without talking to S3 by running this file 
+# season_end_year can only be 2000 - 2020
+# Visit https://github.com/jaebradley/basketball_reference_web_scraper for more info
 
 from basketball_reference_web_scraper import client
 from basketball_reference_web_scraper.data import OutputType
