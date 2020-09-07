@@ -1,3 +1,5 @@
+# this file isn't used but you can get player data without talking to S3 by running this file 
+
 from basketball_reference_web_scraper import client
 from basketball_reference_web_scraper.data import OutputType
 
