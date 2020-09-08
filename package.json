@@ -20,7 +20,6 @@
         "start": "node server/index.js",
         "client-start": "react-scripts start",
         "build": "npm install && react-scripts build",
-        "postinstall": "npm install -g serve && serve -s build",
         "test": "react-scripts test",
         "client-eject": "react-scripts eject"
     },
