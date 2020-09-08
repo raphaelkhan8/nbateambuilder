@@ -19,7 +19,8 @@
     "scripts": {
         "start": "node server/index.js",
         "client-start": "react-scripts start",
-        "build": "npm install && react-scripts build",
+        "client-build": "react-scripts build",
+        "build": "npm install && npm run client-start",
         "test": "react-scripts test",
         "client-eject": "react-scripts eject"
     },
