@@ -1,7 +1,11 @@
 const AWS = require("aws-sdk");
-const S3 = new AWS.S3();
 const _ = require("lodash");
-const { bucket } = process.env;
+const { bucket, S3_KEY, S3_SECRET } = process.env;
+
+const S3 = new AWS.S3({
+    accessKeyId: S3_KEY,
+    secretAccessKey: S3_SECRET,
+});
 
 const getPlayers = async (year) => {
     const yearStart = year - 1;
