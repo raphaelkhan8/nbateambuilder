@@ -17,9 +17,9 @@
         "react-scripts": "3.4.3"
     },
     "scripts": {
-        "client-start": "react-scripts start",
-        "build": "react-scripts build",
         "start": "node server/index.js",
+        "client-start": "react-scripts start",
+        "build": "npm install && npm run client-start",
         "test": "react-scripts test",
         "client-eject": "react-scripts eject"
     },
