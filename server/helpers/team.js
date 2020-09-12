@@ -30,8 +30,10 @@ const releasePlayer = (releasedPlayer) => {
     team.minutesAvailable += releasedPlayer.minutes_played;
     team.totalWins -= releasedPlayer.win_shares;
     team.averageAge =
-        (team.averageAge * numOfPlayers - releasedPlayer.age) /
-        (numOfPlayers - 1);
+        numOfPlayers - 1
+            ? (team.averageAge * numOfPlayers - releasedPlayer.age) /
+              (numOfPlayers - 1)
+            : 0;
     return team;
 };
 
