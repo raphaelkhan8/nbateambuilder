@@ -7,13 +7,16 @@ const team = {
     averageAge: 0,
 };
 
-const addPlayer = (player) => {
+const addPlayer = (player, year) => {
     const { maxMinutes } = constants;
     let numOfPlayers = team.players.length;
     if (team.totalMinutesPlayed + player.minutes_played <= maxMinutes) {
         team.players.push(player);
         team.totalMinutesPlayed += player.minutes_played;
-        team.minutesAvailable = maxMinutes - team.totalMinutesPlayed;
+        team.minutesAvailable =
+            year !== 2020
+                ? maxMinutes - team.totalMinutesPlayed
+                : 15600 - team.totalMinutesPlayed;
         team.totalWins += player.win_shares;
         team.averageAge =
             (team.averageAge * numOfPlayers + player.age) / (numOfPlayers + 1);

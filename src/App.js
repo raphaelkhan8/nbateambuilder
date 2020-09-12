@@ -78,7 +78,10 @@ class App extends Component {
 
     addPlayer = (selectedPlayer) => {
         axios
-            .post("/addPlayer", { player: selectedPlayer })
+            .post("/addPlayer", {
+                player: selectedPlayer,
+                year: this.state.nbaYear,
+            })
             .then((res) => {
                 const { position, name } = selectedPlayer;
                 let pos = position.toLowerCase() + "s";
