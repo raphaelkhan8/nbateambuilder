@@ -15,6 +15,7 @@ class App extends Component {
         super(props);
         this.state = {
             inputYear: "",
+            nbaYear: "",
             centers: [],
             power_forwards: [],
             small_forwards: [],
@@ -57,6 +58,10 @@ class App extends Component {
         );
         event.preventDefault();
         this.getPlayerList(this.state.inputYear);
+        this.setState({
+            nbaYear: this.state.inputYear,
+            inputYear: "",
+        });
     };
 
     getTeam = () => {
@@ -79,7 +84,7 @@ class App extends Component {
                     team: res.data.players,
                     teamWins: res.data.totalWins.toFixed(1),
                     teamMinutesLeft: res.data.minutesAvailable,
-                    averageAge: Number.isInteger(res.data.averageAge)
+                    averageAge: Number.isInteger(res.data.averageAge || 0)
                         ? res.data.averageAge
                         : res.data.averageAge.toFixed(2),
                     [pos]: this.state[pos].filter(
@@ -94,12 +99,13 @@ class App extends Component {
         axios
             .post("/releasePlayer", { player: selectedPlayer })
             .then((res) => {
+                console.log("AverageAge: ", res.data.averageAge);
                 let pos = selectedPlayer.position.toLowerCase() + "s";
                 this.setState({
                     team: res.data.players,
                     teamWins: res.data.totalWins.toFixed(1),
                     teamMinutesLeft: res.data.minutesAvailable,
-                    averageAge: Number.isInteger(res.data.averageAge)
+                    averageAge: Number.isInteger(res.data.averageAge || 0)
                         ? res.data.averageAge
                         : res.data.averageAge.toFixed(2),
                     [pos]: this.state[pos].concat(selectedPlayer),
@@ -111,6 +117,7 @@ class App extends Component {
     render() {
         const {
             inputYear,
+            nbaYear,
             centers,
             power_forwards,
             small_forwards,
@@ -151,9 +158,11 @@ class App extends Component {
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
-                <h1>Player List</h1>
                 {Object.keys(centers).length ? (
                     <div id="players">
+                        <h1>
+                            Players from the {nbaYear - 1}-{nbaYear} Season
+                        </h1>
                         <h2>CENTERS</h2>
                         {centers.map((center) => (
                             <Centers
@@ -192,7 +201,10 @@ class App extends Component {
                     </div>
                 ) : (
                     <div>
-                        <h2>No List Items Found</h2>
+                        <h2>
+                            Input a year to get the list of players from that
+                            NBA season
+                        </h2>
                     </div>
                 )}
             </div>
