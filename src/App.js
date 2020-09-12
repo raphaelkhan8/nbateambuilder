@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import {
     Centers,
     PointGuards,
@@ -84,7 +86,7 @@ class App extends Component {
                     team: res.data.players,
                     teamWins: res.data.totalWins.toFixed(1),
                     teamMinutesLeft: res.data.minutesAvailable,
-                    averageAge: Number.isInteger(res.data.averageAge || 0)
+                    averageAge: Number.isInteger(res.data.averageAge)
                         ? res.data.averageAge
                         : res.data.averageAge.toFixed(2),
                     [pos]: this.state[pos].filter(
@@ -99,13 +101,12 @@ class App extends Component {
         axios
             .post("/releasePlayer", { player: selectedPlayer })
             .then((res) => {
-                console.log("AverageAge: ", res.data.averageAge);
                 let pos = selectedPlayer.position.toLowerCase() + "s";
                 this.setState({
                     team: res.data.players,
                     teamWins: res.data.totalWins.toFixed(1),
                     teamMinutesLeft: res.data.minutesAvailable,
-                    averageAge: Number.isInteger(res.data.averageAge || 0)
+                    averageAge: Number.isInteger(res.data.averageAge)
                         ? res.data.averageAge
                         : res.data.averageAge.toFixed(2),
                     [pos]: this.state[pos].concat(selectedPlayer),
@@ -140,6 +141,7 @@ class App extends Component {
                         <h4>Minutes Left: {teamMinutesLeft}</h4>
                         {team.map((player) => (
                             <Team
+                                id={uuidv4()}
                                 player={player}
                                 releasePlayer={this.releasePlayer}
                             />
@@ -164,40 +166,27 @@ class App extends Component {
                             Players from the {nbaYear - 1}-{nbaYear} Season
                         </h1>
                         <h2>CENTERS</h2>
-                        {centers.map((center) => (
-                            <Centers
-                                player={center}
-                                addPlayer={this.addPlayer}
-                            />
-                        ))}
+                        <Centers players={centers} addPlayer={this.addPlayer} />
                         <h2>POWER FORWARDS</h2>
-                        {power_forwards.map((powerForward) => (
-                            <PowerForwards
-                                player={powerForward}
-                                addPlayer={this.addPlayer}
-                            />
-                        ))}
+                        <PowerForwards
+                            players={power_forwards}
+                            addPlayer={this.addPlayer}
+                        />
                         <h2>SMALL FORWARDS</h2>
-                        {small_forwards.map((smallForward) => (
-                            <SmallForwards
-                                player={smallForward}
-                                addPlayer={this.addPlayer}
-                            />
-                        ))}
+                        <SmallForwards
+                            players={small_forwards}
+                            addPlayer={this.addPlayer}
+                        />
                         <h2>SHOOTING GUARDS</h2>
-                        {shooting_guards.map((shootingGuard) => (
-                            <ShootingGuards
-                                player={shootingGuard}
-                                addPlayer={this.addPlayer}
-                            />
-                        ))}
+                        <ShootingGuards
+                            players={shooting_guards}
+                            addPlayer={this.addPlayer}
+                        />
                         <h2>POINT GUARDS</h2>
-                        {point_guards.map((pointGuard) => (
-                            <PointGuards
-                                player={pointGuard}
-                                addPlayer={this.addPlayer}
-                            />
-                        ))}
+                        <PointGuards
+                            players={point_guards}
+                            addPlayer={this.addPlayer}
+                        />
                     </div>
                 ) : (
                     <div>
