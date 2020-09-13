@@ -194,17 +194,12 @@ class App extends Component {
                                     />
                                 </Route>
                                 <Route path="/point_guards">
-                                    <h2>SMALL FORWARDS</h2>
+                                    <h2>POINT GUARDS</h2>
                                     <Players
-                                        players={small_forwards}
+                                        players={point_guards}
                                         addPlayer={this.addPlayer}
                                     />
                                 </Route>
-                                <h2>POINT GUARDS</h2>
-                                <Players
-                                    players={point_guards}
-                                    addPlayer={this.addPlayer}
-                                />
                             </Switch>
                         </div>
                     </div>
