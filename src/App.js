@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import Swal from "sweetalert2";
 
 import { Players, Team, Nav } from "./Components/index";
 import "./App.css";
@@ -24,10 +25,6 @@ class App extends Component {
         };
     }
 
-    componentDidMount() {
-        // this.getPlayerList();
-    }
-
     handleChange = (event) => {
         this.setState({ inputYear: event.target.value });
     };
@@ -49,25 +46,26 @@ class App extends Component {
     };
 
     handleSubmit = (event) => {
-        alert(
-            "Player data from " + this.state.inputYear + " is being fetched."
-        );
         event.preventDefault();
-        this.getPlayerList(this.state.inputYear);
-        this.setState({
-            nbaYear: this.state.inputYear,
-            inputYear: "",
-        });
-    };
-
-    getTeam = () => {
-        let ctx = this;
-        axios
-            .get("/getTeam")
-            .then((team) => {
-                ctx.setState({ team });
-            })
-            .catch((err) => console.error(err));
+        const { inputYear } = this.state;
+        console.log(Number(inputYear));
+        if (Number(inputYear) >= 2000 && Number(inputYear) <= 2020) {
+            Swal.fire(
+                `Player data from ${
+                    inputYear - 1
+                }-${inputYear} is being fetched.`
+            );
+            this.getPlayerList(inputYear);
+            this.setState({
+                nbaYear: inputYear,
+                inputYear: "",
+            });
+        } else {
+            Swal.fire("Please enter a valid year (2000-2020)");
+            this.setState({
+                inputYear: "",
+            });
+        }
     };
 
     addPlayer = (selectedPlayer) => {
@@ -161,7 +159,7 @@ class App extends Component {
                 {Object.keys(centers).length ? (
                     <div id="players">
                         <h1>
-                            Players from the {nbaYear - 1}-{nbaYear} Season
+                            {nbaYear - 1}-{nbaYear} NBA season stats
                         </h1>
                         <div>
                             <Nav />
