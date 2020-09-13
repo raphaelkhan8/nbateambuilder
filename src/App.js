@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
+import { Button } from "reactstrap";
 import { v4 as uuidv4 } from "uuid";
 import Swal from "sweetalert2";
 
@@ -22,6 +23,7 @@ class App extends Component {
             teamWins: 0,
             teamMinutesLeft: 0,
             averageAge: 0,
+            showTeam: false,
         };
     }
 
@@ -51,9 +53,7 @@ class App extends Component {
         console.log(Number(inputYear));
         if (Number(inputYear) >= 2000 && Number(inputYear) <= 2020) {
             Swal.fire(
-                `Player data from ${
-                    inputYear - 1
-                }-${inputYear} is being fetched.`
+                `${inputYear - 1}-${inputYear} player data is being fetched.`
             );
             this.getPlayerList(inputYear);
             this.setState({
@@ -92,6 +92,12 @@ class App extends Component {
             .catch((err) => console.error(err));
     };
 
+    toggleShowTeam = () => {
+        this.setState({
+            showTeam: !this.state.showTeam,
+        });
+    };
+
     releasePlayer = (selectedPlayer) => {
         axios
             .post("/releasePlayer", { player: selectedPlayer })
@@ -123,6 +129,7 @@ class App extends Component {
             teamWins,
             teamMinutesLeft,
             averageAge,
+            showTeam,
         } = this.state;
 
         return (
@@ -145,13 +152,24 @@ class App extends Component {
                         <h4>Number of Players: {team.length}</h4>
                         <h4>Average Age: {averageAge}</h4>
                         <h4>Minutes Left: {teamMinutesLeft}</h4>
-                        {team.map((player) => (
-                            <Team
-                                id={uuidv4()}
-                                player={player}
-                                releasePlayer={this.releasePlayer}
-                            />
-                        ))}
+                        {showTeam ? (
+                            <div>
+                                <Button onClick={this.toggleShowTeam}>
+                                    Hide My Team
+                                </Button>
+                                {team.map((player) => (
+                                    <Team
+                                        id={uuidv4()}
+                                        player={player}
+                                        releasePlayer={this.releasePlayer}
+                                    />
+                                ))}
+                            </div>
+                        ) : (
+                            <Button onClick={this.toggleShowTeam}>
+                                Show My Team
+                            </Button>
+                        )}
                     </div>
                 ) : (
                     <div>You don't have any players :/</div>
