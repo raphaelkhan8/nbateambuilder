@@ -2,18 +2,19 @@ import React from "react";
 import { Container, Col, Row, Table, Button } from "reactstrap";
 import { v4 as uuidv4 } from "uuid";
 
-const SmallForwards = (props) => {
+const Players = (props) => {
     const { players, addPlayer } = props;
     return (
         <Container className="mt-4">
             <Row>
                 <Col>
                     <Table
+                        text-align="center"
                         responsive
                         hover
                         color="white"
                         bordered
-                        size="sm"
+                        size="md"
                         sm={{ size: 12 }}
                         md={{ size: 10, offset: 1 }}
                     >
@@ -70,4 +71,4 @@ const SmallForwards = (props) => {
     );
 };
 
-export default SmallForwards;
+export default Players;

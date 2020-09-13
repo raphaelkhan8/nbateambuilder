@@ -2,17 +2,9 @@ import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-import {
-    Centers,
-    PointGuards,
-    PowerForwards,
-    SmallForwards,
-    ShootingGuards,
-    Team,
-} from "./Components/index";
+import { Players, Team, Nav } from "./Components/index";
 import "./App.css";
 import axios from "axios";
-import Nav from "./Components/Nav";
 
 class App extends Component {
     constructor(props) {
@@ -176,41 +168,41 @@ class App extends Component {
                             <Switch>
                                 <Route path="/centers">
                                     <h2>CENTERS</h2>
-                                    <Centers
+                                    <Players
                                         players={centers}
                                         addPlayer={this.addPlayer}
                                     />
                                 </Route>
                                 <Route path="/power_forwards">
                                     <h2>POWER FORWARDS</h2>
-                                    <PowerForwards
+                                    <Players
                                         players={power_forwards}
                                         addPlayer={this.addPlayer}
                                     />
                                 </Route>
                                 <Route path="/small_forwards">
                                     <h2>SMALL FORWARDS</h2>
-                                    <SmallForwards
+                                    <Players
                                         players={small_forwards}
                                         addPlayer={this.addPlayer}
                                     />
                                 </Route>
                                 <Route path="/shooting_guards">
                                     <h2>SHOOTING GUARDS</h2>
-                                    <ShootingGuards
+                                    <Players
                                         players={shooting_guards}
                                         addPlayer={this.addPlayer}
                                     />
                                 </Route>
                                 <Route path="/point_guards">
                                     <h2>SMALL FORWARDS</h2>
-                                    <SmallForwards
+                                    <Players
                                         players={small_forwards}
                                         addPlayer={this.addPlayer}
                                     />
                                 </Route>
                                 <h2>POINT GUARDS</h2>
-                                <PointGuards
+                                <Players
                                     players={point_guards}
                                     addPlayer={this.addPlayer}
                                 />

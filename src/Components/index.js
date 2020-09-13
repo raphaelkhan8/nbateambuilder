@@ -1,15 +1,5 @@
-import Centers from "./Centers";
-import PointGuards from "./PointGuards";
-import PowerForwards from "./PowerForwards";
-import ShootingGuards from "./ShootingGuards";
-import SmallForwards from "./SmallForwards";
+import Players from "./Players";
 import Team from "./Team";
+import Nav from "./Nav";
 
-export {
-    Centers,
-    PointGuards,
-    PowerForwards,
-    ShootingGuards,
-    SmallForwards,
-    Team,
-};
+export { Players, Team, Nav };
