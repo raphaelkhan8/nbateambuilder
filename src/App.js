@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -12,6 +12,7 @@ import {
 } from "./Components/index";
 import "./App.css";
 import axios from "axios";
+import Nav from "./Components/Nav";
 
 class App extends Component {
     constructor(props) {
@@ -169,91 +170,57 @@ class App extends Component {
                         <h1>
                             Players from the {nbaYear - 1}-{nbaYear} Season
                         </h1>
-                        <Router>
-                            <div>
-                                <div>
-                                    <Link
-                                        to="/centers"
-                                        style={{ marginRight: 20 }}
-                                    >
-                                        Centers
-                                    </Link>
-                                    <Link
-                                        to="/power_forwards"
-                                        style={{ marginRight: 20 }}
-                                    >
-                                        Power Forwards
-                                    </Link>
-                                    <Link
-                                        to="/small_forwards"
-                                        style={{ marginRight: 20 }}
-                                    >
-                                        Small Forwards
-                                    </Link>
-                                    <Link
-                                        to="/shooting_guards"
-                                        style={{ marginRight: 20 }}
-                                    >
-                                        Shooting Guards
-                                    </Link>
-                                    <Link
-                                        to="/point_guards"
-                                        style={{ marginRight: 20 }}
-                                    >
-                                        Point Guards
-                                    </Link>
-                                </div>
+                        <div>
+                            <Nav />
 
-                                <Switch>
-                                    <Route path="/centers">
-                                        <h2>CENTERS</h2>
-                                        <Centers
-                                            players={centers}
-                                            addPlayer={this.addPlayer}
-                                        />
-                                    </Route>
-                                    <Route path="/power_forwards">
-                                        <h2>POWER FORWARDS</h2>
-                                        <PowerForwards
-                                            players={power_forwards}
-                                            addPlayer={this.addPlayer}
-                                        />
-                                    </Route>
-                                    <Route path="/small_forwards">
-                                        <h2>SMALL FORWARDS</h2>
-                                        <SmallForwards
-                                            players={small_forwards}
-                                            addPlayer={this.addPlayer}
-                                        />
-                                    </Route>
-                                    <Route path="/shooting_guards">
-                                        <h2>SHOOTING GUARDS</h2>
-                                        <ShootingGuards
-                                            players={shooting_guards}
-                                            addPlayer={this.addPlayer}
-                                        />
-                                    </Route>
-                                    <Route path="/point_guards">
-                                        <h2>SMALL FORWARDS</h2>
-                                        <SmallForwards
-                                            players={small_forwards}
-                                            addPlayer={this.addPlayer}
-                                        />
-                                    </Route>
-                                    <h2>POINT GUARDS</h2>
-                                    <PointGuards
-                                        players={point_guards}
+                            <Switch>
+                                <Route path="/centers">
+                                    <h2>CENTERS</h2>
+                                    <Centers
+                                        players={centers}
                                         addPlayer={this.addPlayer}
                                     />
-                                </Switch>
-                            </div>
-                        </Router>
+                                </Route>
+                                <Route path="/power_forwards">
+                                    <h2>POWER FORWARDS</h2>
+                                    <PowerForwards
+                                        players={power_forwards}
+                                        addPlayer={this.addPlayer}
+                                    />
+                                </Route>
+                                <Route path="/small_forwards">
+                                    <h2>SMALL FORWARDS</h2>
+                                    <SmallForwards
+                                        players={small_forwards}
+                                        addPlayer={this.addPlayer}
+                                    />
+                                </Route>
+                                <Route path="/shooting_guards">
+                                    <h2>SHOOTING GUARDS</h2>
+                                    <ShootingGuards
+                                        players={shooting_guards}
+                                        addPlayer={this.addPlayer}
+                                    />
+                                </Route>
+                                <Route path="/point_guards">
+                                    <h2>SMALL FORWARDS</h2>
+                                    <SmallForwards
+                                        players={small_forwards}
+                                        addPlayer={this.addPlayer}
+                                    />
+                                </Route>
+                                <h2>POINT GUARDS</h2>
+                                <PointGuards
+                                    players={point_guards}
+                                    addPlayer={this.addPlayer}
+                                />
+                            </Switch>
+                        </div>
                     </div>
                 ) : (
                     <div>
                         <h2>
-                            Input a year to get the list of players from that
-                            NBA season
+                            Input a year to get the players from that NBA season
                         </h2>
                     </div>
                 )}
