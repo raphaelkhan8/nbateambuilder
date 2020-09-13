@@ -10,8 +10,12 @@ const Team = (props) => {
                     <td>
                         <em>{player.name}</em>
                     </td>
-                    <td>Team: {player.team}</td>
+                    <td>
+                        Team: {player.season}
+                        {player.team.split(" ").slice(-1)[0]}
+                    </td>
                     <td>Age: {player.age}</td>
+                    <td>Position: {player.position.replace("_", " ")}</td>
                     <td>Minutes Played: {player.minutes_played}</td>
                     <td>Win Shares: {player.win_shares}</td>
                     <td>

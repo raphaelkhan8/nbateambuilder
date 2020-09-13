@@ -11,6 +11,8 @@ const addPlayer = (player, year) => {
     const { maxMinutes } = constants;
     let numOfPlayers = team.players.length;
     if (team.totalMinutesPlayed + player.minutes_played <= maxMinutes) {
+        let season = `${year - 1}-${year} `;
+        player = { ...player, season };
         team.players.push(player);
         team.totalMinutesPlayed += player.minutes_played;
         team.minutesAvailable =
