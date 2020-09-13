@@ -4,7 +4,7 @@ import { Button } from "reactstrap";
 const Team = (props) => {
     const { player, releasePlayer, id } = props;
     return (
-        <table>
+        <table className="team__table">
             <tbody>
                 <tr key={id}>
                     <td>
