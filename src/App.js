@@ -129,6 +129,17 @@ class App extends Component {
 
         return (
             <div className="App">
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        NBA Season:
+                        <textarea
+                            placeholder="Input season end-year (2000 - 2020)"
+                            value={inputYear}
+                            onChange={this.handleChange}
+                        />
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
                 <h2>My Team</h2>
                 {team.length ? (
                     <div id="team">
@@ -145,18 +156,8 @@ class App extends Component {
                         ))}
                     </div>
                 ) : (
-                    <div>Add a player to your team</div>
+                    <div>You don't have any players :/</div>
                 )}
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        NBA Season:
-                        <textarea
-                            value={inputYear}
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <input type="submit" value="Submit" />
-                </form>
                 {Object.keys(centers).length ? (
                     <div id="players">
                         <h1>
@@ -210,11 +211,7 @@ class App extends Component {
                         </div>
                     </div>
                 ) : (
-                    <div>
-                        <h2>
-                            Input a year to get the players from that NBA season
-                        </h2>
-                    </div>
+                    <div></div>
                 )}
             </div>
         );
