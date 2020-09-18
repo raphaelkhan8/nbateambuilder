@@ -10,19 +10,17 @@ const team = {
 const addPlayer = (player, year) => {
     const { maxMinutes } = constants;
     let numOfPlayers = team.players.length;
-    if (team.totalMinutesPlayed + player.minutes_played <= maxMinutes) {
-        let season = `${year - 1}-${year} `;
-        player = { ...player, season };
-        team.players.push(player);
-        team.totalMinutesPlayed += player.minutes_played;
-        team.minutesAvailable =
-            year !== 2020
-                ? maxMinutes - team.totalMinutesPlayed
-                : 17280 - team.totalMinutesPlayed;
-        team.totalWins += player.win_shares;
-        team.averageAge =
-            (team.averageAge * numOfPlayers + player.age) / (numOfPlayers + 1);
-    }
+    let season = `${year - 1}-${year} `;
+    player = { ...player, season };
+    team.players.push(player);
+    team.totalMinutesPlayed += player.minutes_played;
+    team.minutesAvailable =
+        year !== 2020
+            ? maxMinutes - team.totalMinutesPlayed
+            : 17280 - team.totalMinutesPlayed;
+    team.totalWins += player.win_shares;
+    team.averageAge =
+        (team.averageAge * numOfPlayers + player.age) / (numOfPlayers + 1);
     return team;
 };
 

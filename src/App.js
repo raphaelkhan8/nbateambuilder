@@ -3,10 +3,10 @@ import { Switch, Route } from "react-router-dom";
 import { Button } from "reactstrap";
 import { v4 as uuidv4 } from "uuid";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 import { Players, Team, Nav } from "./Components/index";
 import "./App.css";
-import axios from "axios";
 
 class App extends Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class App extends Component {
             point_guards: [],
             team: [],
             teamWins: 0,
-            teamMinutesLeft: 0,
+            teamMinutesLeft: 19680,
             averageAge: 0,
             showTeam: false,
         };
@@ -50,11 +50,12 @@ class App extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         const { inputYear } = this.state;
-        console.log(Number(inputYear));
         if (Number(inputYear) >= 2000 && Number(inputYear) <= 2020) {
-            Swal.fire(
-                `${inputYear - 1}-${inputYear} player data is being fetched.`
-            );
+            Swal.fire({
+                text: `${
+                    inputYear - 1
+                }-${inputYear} player data is being fetched.`,
+            });
             this.getPlayerList(inputYear);
             this.setState({
                 nbaYear: inputYear,
@@ -69,27 +70,31 @@ class App extends Component {
     };
 
     addPlayer = (selectedPlayer) => {
-        axios
-            .post("/addPlayer", {
-                player: selectedPlayer,
-                year: this.state.nbaYear,
-            })
-            .then((res) => {
-                const { position, name } = selectedPlayer;
-                let pos = position.toLowerCase() + "s";
-                this.setState({
-                    team: res.data.players,
-                    teamWins: res.data.totalWins.toFixed(1),
-                    teamMinutesLeft: res.data.minutesAvailable,
-                    averageAge: Number.isInteger(res.data.averageAge)
-                        ? res.data.averageAge
-                        : res.data.averageAge.toFixed(2),
-                    [pos]: this.state[pos].filter(
-                        (player) => player.name !== name
-                    ),
-                });
-            })
-            .catch((err) => console.error(err));
+        if (this.state.teamMinutesLeft - selectedPlayer.minutes_played >= 0) {
+            axios
+                .post("/addPlayer", {
+                    player: selectedPlayer,
+                    year: this.state.nbaYear,
+                })
+                .then((res) => {
+                    const { position, name } = selectedPlayer;
+                    let pos = position.toLowerCase() + "s";
+                    this.setState({
+                        team: res.data.players,
+                        teamWins: res.data.totalWins.toFixed(1),
+                        teamMinutesLeft: res.data.minutesAvailable,
+                        averageAge: Number.isInteger(res.data.averageAge)
+                            ? res.data.averageAge
+                            : res.data.averageAge.toFixed(2),
+                        [pos]: this.state[pos].filter(
+                            (player) => player.name !== name
+                        ),
+                    });
+                })
+                .catch((err) => console.error(err));
+        } else {
+            Swal.fire(`Not enough minutes to add ${selectedPlayer.name}`);
+        }
     };
 
     toggleShowTeam = () => {
@@ -134,7 +139,7 @@ class App extends Component {
 
         return (
             <div className="App">
-                <form onSubmit={this.handleSubmit}>
+                <form id="inputForm" onSubmit={this.handleSubmit}>
                     <label>
                         NBA Season:
                         <textarea
