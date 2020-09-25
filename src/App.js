@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { Button } from "reactstrap";
-import { v4 as uuidv4 } from "uuid";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-import { Team, Nav } from "./Components/index";
+import { InputForm, Team, Nav } from "./Components/index";
 import "./App.css";
 
 class App extends Component {
@@ -138,42 +136,23 @@ class App extends Component {
 
         return (
             <div className="App">
-                <form id="inputForm" onSubmit={this.handleSubmit}>
-                    <label>
-                        NBA Season:
-                        <textarea
-                            placeholder="Input season end-year (2000 - 2020)"
-                            value={inputYear}
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <input type="submit" value="Submit" />
-                </form>
+                <InputForm
+                    inputYear={inputYear}
+                    handleChange={this.handleChange}
+                    handleSubmit={this.handleSubmit}
+                />
                 <h2>My Team</h2>
                 {team.length ? (
-                    <div id="team">
-                        <h3>Wins: {teamWins}</h3>
-                        <h4>Number of Players: {team.length}</h4>
-                        <h4>Average Age: {averageAge}</h4>
-                        <h4>Minutes Left: {teamMinutesLeft}</h4>
-                        {showTeam ? (
-                            <div>
-                                <Button onClick={this.toggleShowTeam}>
-                                    Hide My Team
-                                </Button>
-                                {team.map((player) => (
-                                    <Team
-                                        id={uuidv4()}
-                                        player={player}
-                                        releasePlayer={this.releasePlayer}
-                                    />
-                                ))}
-                            </div>
-                        ) : (
-                            <Button onClick={this.toggleShowTeam}>
-                                Show My Team
-                            </Button>
-                        )}
+                    <div>
+                        <Team
+                            team={team}
+                            teamWins={teamWins}
+                            teamMinutesLeft={teamMinutesLeft}
+                            averageAge={averageAge}
+                            showTeam={showTeam}
+                            toggleShowTeam={this.toggleShowTeam}
+                            releasePlayer={this.releasePlayer}
+                        />
                     </div>
                 ) : (
                     <div>You don't have any players :/</div>

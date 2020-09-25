@@ -1,35 +1,41 @@
 import React from "react";
 import { Button } from "reactstrap";
+import { v4 as uuidv4 } from "uuid";
+import TeamList from "./TeamList";
 
 const Team = (props) => {
-    const { player, releasePlayer, id } = props;
+    const {
+        team,
+        teamWins,
+        averageAge,
+        teamMinutesLeft,
+        showTeam,
+        toggleShowTeam,
+        releasePlayer,
+    } = props;
     return (
-        <table className="team__table">
-            <tbody>
-                <tr key={id}>
-                    <td>
-                        <em>{player.name}</em>
-                    </td>
-                    <td>
-                        Team: {player.season}
-                        {player.team.split(" ").slice(-1)[0]}
-                    </td>
-                    <td>Age: {player.age}</td>
-                    <td>Position: {player.position.replace("_", " ")}</td>
-                    <td>Minutes Played: {player.minutes_played}</td>
-                    <td>Win Shares: {player.win_shares}</td>
-                    <td>
-                        <Button
-                            onClick={() => {
-                                releasePlayer(player);
-                            }}
-                        >
-                            Release Player
-                        </Button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div>
+            <div className="team__stats">
+                <h3>Wins: {teamWins}</h3>
+                <h4>Number of Players: {team.length}</h4>
+                <h4>Average Age: {averageAge}</h4>
+                <h4>Minutes Left: {teamMinutesLeft}</h4>
+            </div>
+            {showTeam ? (
+                <div>
+                    <Button onClick={toggleShowTeam}>Hide My Team</Button>
+                    {team.map((player) => (
+                        <TeamList
+                            id={uuidv4()}
+                            player={player}
+                            releasePlayer={releasePlayer}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <Button onClick={toggleShowTeam}>Show My Team</Button>
+            )}
+        </div>
     );
 };
 
