@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
 import { Button } from "reactstrap";
 import { v4 as uuidv4 } from "uuid";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-import { Players, Team, Nav } from "./Components/index";
+import { Team, Nav } from "./Components/index";
 import "./App.css";
 
 class App extends Component {
@@ -77,7 +76,7 @@ class App extends Component {
                     year: this.state.nbaYear,
                 })
                 .then((res) => {
-                    const { position, name } = selectedPlayer;
+                    const { name, position } = selectedPlayer;
                     let pos = position.toLowerCase() + "s";
                     this.setState({
                         team: res.data.players,
@@ -185,49 +184,18 @@ class App extends Component {
                             {nbaYear - 1}-{nbaYear} NBA season stats
                         </h1>
                         <div>
-                            <Nav />
-
-                            <Switch>
-                                <Route path="/centers">
-                                    <h2>CENTERS</h2>
-                                    <Players
-                                        players={centers}
-                                        addPlayer={this.addPlayer}
-                                    />
-                                </Route>
-                                <Route path="/power_forwards">
-                                    <h2>POWER FORWARDS</h2>
-                                    <Players
-                                        players={power_forwards}
-                                        addPlayer={this.addPlayer}
-                                    />
-                                </Route>
-                                <Route path="/small_forwards">
-                                    <h2>SMALL FORWARDS</h2>
-                                    <Players
-                                        players={small_forwards}
-                                        addPlayer={this.addPlayer}
-                                    />
-                                </Route>
-                                <Route path="/shooting_guards">
-                                    <h2>SHOOTING GUARDS</h2>
-                                    <Players
-                                        players={shooting_guards}
-                                        addPlayer={this.addPlayer}
-                                    />
-                                </Route>
-                                <Route path="/point_guards">
-                                    <h2>POINT GUARDS</h2>
-                                    <Players
-                                        players={point_guards}
-                                        addPlayer={this.addPlayer}
-                                    />
-                                </Route>
-                            </Switch>
+                            <Nav
+                                point_guards={point_guards}
+                                shooting_guards={shooting_guards}
+                                small_forwards={small_forwards}
+                                power_forwards={power_forwards}
+                                centers={centers}
+                                addPlayer={this.addPlayer}
+                            />
                         </div>
                     </div>
                 ) : (
-                    <div></div>
+                    <div>Something went wrong D:</div>
                 )}
             </div>
         );
