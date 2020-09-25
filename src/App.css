@@ -2,6 +2,10 @@
     text-align: center;
 }
 
+.instructions {
+    padding-top: 50px;
+}
+
 table {
     width: 100%;
 }
@@ -16,10 +20,14 @@ table th {
     text-align: center;
 }
 
-.team__table td {
-    width: calc(100% / 6);
+h4 {
+    float: center;
+    display: inline-block;
+    margin-top: 0.5px;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
-.instructions {
-    padding-top: 60px;
+.team__table td {
+    width: calc(100% / 6);
 }
