@@ -183,19 +183,21 @@ class App extends Component {
                         <h1>
                             {nbaYear - 1}-{nbaYear} NBA season stats
                         </h1>
-                        <div>
-                            <Nav
-                                point_guards={point_guards}
-                                shooting_guards={shooting_guards}
-                                small_forwards={small_forwards}
-                                power_forwards={power_forwards}
-                                centers={centers}
-                                addPlayer={this.addPlayer}
-                            />
-                        </div>
+                        <Nav
+                            nbaYear={nbaYear}
+                            point_guards={point_guards}
+                            shooting_guards={shooting_guards}
+                            small_forwards={small_forwards}
+                            power_forwards={power_forwards}
+                            centers={centers}
+                            addPlayer={this.addPlayer}
+                        />
                     </div>
                 ) : (
-                    <div>Something went wrong D:</div>
+                    <div className="instructions">
+                        Enter a year (2000 through 2020) to get the NBA players
+                        from that season
+                    </div>
                 )}
             </div>
         );
