@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-import { InputForm, Team, Nav } from "./Components/index";
+import { InputForm, Team, Players, Nav } from "./Components/index";
 import "./App.css";
 
 class App extends Component {
@@ -162,7 +162,10 @@ class App extends Component {
                         <h1>
                             {nbaYear - 1}-{nbaYear} NBA season stats
                         </h1>
-                        <Nav
+
+                        <Nav />
+
+                        <Players
                             nbaYear={nbaYear}
                             point_guards={point_guards}
                             shooting_guards={shooting_guards}

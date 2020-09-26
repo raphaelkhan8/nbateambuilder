@@ -11,7 +11,6 @@ const Players = (props) => {
         centers,
         addPlayer,
     } = props;
-    console.log("Player Props:", centers);
     return (
         <div>
             <Switch>

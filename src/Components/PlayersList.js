@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from "uuid";
 
 const PlayersList = (props) => {
     const { players, addPlayer } = props;
-    console.log("PlayerList", players);
     return (
         <Container className="mt-4">
             <Row>
