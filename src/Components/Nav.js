@@ -1,16 +1,7 @@
 import React from "react";
-import { Link, Switch, Route } from "react-router-dom";
-import Players from "./Players";
+import { Link } from "react-router-dom";
 
-const Nav = (props) => {
-    const {
-        point_guards,
-        shooting_guards,
-        small_forwards,
-        power_forwards,
-        centers,
-        addPlayer,
-    } = props;
+const Nav = () => {
     return (
         <div>
             <Link to="/point_guards" style={{ marginRight: 20 }}>
@@ -28,28 +19,6 @@ const Nav = (props) => {
             <Link to="/centers" style={{ marginRight: 20 }}>
                 Centers
             </Link>
-            <Switch>
-                <Route path="/point_guards">
-                    <h2>POINT GUARDS</h2>
-                    <Players players={point_guards} addPlayer={addPlayer} />
-                </Route>
-                <Route path="/shooting_guards">
-                    <h2>SHOOTING GUARDS</h2>
-                    <Players players={shooting_guards} addPlayer={addPlayer} />
-                </Route>
-                <Route path="/small_forwards">
-                    <h2>SMALL FORWARDS</h2>
-                    <Players players={small_forwards} addPlayer={addPlayer} />
-                </Route>
-                <Route path="/power_forwards">
-                    <h2>POWER FORWARDS</h2>
-                    <Players players={power_forwards} addPlayer={addPlayer} />
-                </Route>
-                <Route path="/centers">
-                    <h2>CENTERS</h2>
-                    <Players players={centers} addPlayer={addPlayer} />
-                </Route>
-            </Switch>
         </div>
     );
 };

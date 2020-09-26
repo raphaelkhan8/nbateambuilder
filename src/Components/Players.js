@@ -1,73 +1,51 @@
 import React from "react";
-import { Container, Col, Row, Table, Button } from "reactstrap";
-import { v4 as uuidv4 } from "uuid";
+import { Switch, Route } from "react-router-dom";
+import PlayersList from "./PlayersList";
 
 const Players = (props) => {
-    const { players, addPlayer } = props;
+    const {
+        point_guards,
+        shooting_guards,
+        small_forwards,
+        power_forwards,
+        centers,
+        addPlayer,
+    } = props;
+    console.log("Player Props:", centers);
     return (
-        <Container className="mt-4">
-            <Row>
-                <Col>
-                    <Table
-                        text-align="center"
-                        responsive
-                        hover
-                        color="white"
-                        bordered
-                        size="md"
-                        sm={{ size: 12 }}
-                        md={{ size: 10, offset: 1 }}
-                    >
-                        <thead className="bg-green">
-                            <tr>
-                                <th className="th-sm th-text">Name</th>
-                                <th className="th-sm th-text">Team</th>
-                                <th className="th-sm th-text">Age</th>
-                                <th className="th-sm th-text">
-                                    Minutes Played
-                                </th>
-                                <th className="th-sm th-text">Win Shares</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {players.map((player) => {
-                                return (
-                                    <tr key={uuidv4()}>
-                                        <td className="td-sm td-text">
-                                            {player.name}
-                                        </td>
-                                        <td className="td-sm td-text">
-                                            {player.team}
-                                        </td>
-                                        <td className="td-sm td-text">
-                                            {player.age}
-                                        </td>
-                                        <td className="td-sm td-text">
-                                            {player.minutes_played}
-                                        </td>
-                                        <td className="td-sm td-text">
-                                            {player.win_shares}
-                                        </td>
-                                        <td>
-                                            <Button
-                                                className="float-right mb-4 btn-custom"
-                                                size="sm"
-                                                color="success"
-                                                onClick={() =>
-                                                    addPlayer(player)
-                                                }
-                                            >
-                                                Add Player
-                                            </Button>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </Table>
-                </Col>
-            </Row>
-        </Container>
+        <div>
+            <Switch>
+                <Route path="/point_guards">
+                    <h2>POINT GUARDS</h2>
+                    <PlayersList players={point_guards} addPlayer={addPlayer} />
+                </Route>
+                <Route path="/shooting_guards">
+                    <h2>SHOOTING GUARDS</h2>
+                    <PlayersList
+                        players={shooting_guards}
+                        addPlayer={addPlayer}
+                    />
+                </Route>
+                <Route path="/small_forwards">
+                    <h2>SMALL FORWARDS</h2>
+                    <PlayersList
+                        players={small_forwards}
+                        addPlayer={addPlayer}
+                    />
+                </Route>
+                <Route path="/power_forwards">
+                    <h2>POWER FORWARDS</h2>
+                    <PlayersList
+                        players={power_forwards}
+                        addPlayer={addPlayer}
+                    />
+                </Route>
+                <Route path="/centers">
+                    <h2>CENTERS</h2>
+                    <PlayersList List={centers} addPlayer={addPlayer} />
+                </Route>
+            </Switch>
+        </div>
     );
 };
 
