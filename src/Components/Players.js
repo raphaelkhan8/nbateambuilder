@@ -41,7 +41,7 @@ const Players = (props) => {
                 </Route>
                 <Route path="/centers">
                     <h2>CENTERS</h2>
-                    <PlayersList List={centers} addPlayer={addPlayer} />
+                    <PlayersList players={centers} addPlayer={addPlayer} />
                 </Route>
             </Switch>
         </div>
