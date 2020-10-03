@@ -29,5 +29,5 @@ h4 {
 }
 
 .team__table td {
-    width: calc(100% / 6);
+    width: calc(100% / 8);
 }

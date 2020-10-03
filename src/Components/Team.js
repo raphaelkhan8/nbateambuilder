@@ -9,6 +9,7 @@ const Team = (props) => {
         teamWins,
         averageAge,
         teamMinutesLeft,
+        totalShootingPercentage,
         showTeam,
         toggleShowTeam,
         releasePlayer,
@@ -19,6 +20,10 @@ const Team = (props) => {
                 <h3>Wins: {teamWins}</h3>
                 <h4>Number of Players: {team.length}</h4>
                 <h4>Average Age: {averageAge}</h4>
+                <h4>
+                    True Shooting (TS):{" "}
+                    {(totalShootingPercentage * 100).toFixed(1)}%
+                </h4>
                 <h4>Minutes Left: {teamMinutesLeft}</h4>
             </div>
             {showTeam ? (

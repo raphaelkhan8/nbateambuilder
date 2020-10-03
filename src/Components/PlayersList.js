@@ -12,7 +12,7 @@ const PlayersList = (props) => {
                         text-align="center"
                         responsive
                         hover
-                        color="white"
+                        color="black"
                         bordered
                         size="md"
                         sm={{ size: 12 }}
@@ -20,34 +20,36 @@ const PlayersList = (props) => {
                     >
                         <thead className="bg-green">
                             <tr>
-                                <th className="th-sm th-text">Name</th>
-                                <th className="th-sm th-text">Team</th>
-                                <th className="th-sm th-text">Age</th>
-                                <th className="th-sm th-text">
+                                <th>Name</th>
+                                <th>Team</th>
+                                <th title="Player's age during season">Age</th>
+                                <th title="Minutes played during season">
                                     Minutes Played
                                 </th>
-                                <th className="th-sm th-text">Win Shares</th>
+                                <th title="True Shooting %">TS Percentage</th>
+                                <th title="Offensive Win Shares">Off WS</th>
+                                <th title="Defensive Win Shares">Def WS</th>
+                                <th title="Total Win Shares">Total WS</th>
                             </tr>
                         </thead>
                         <tbody>
                             {players.map((player) => {
                                 return (
                                     <tr key={uuidv4()}>
-                                        <td className="td-sm td-text">
-                                            {player.name}
+                                        <td>{player.name}</td>
+                                        <td>{player.team}</td>
+                                        <td>{player.age}</td>
+                                        <td>{player.minutes_played}</td>
+                                        <td>
+                                            {(
+                                                player.true_shooting_percentage *
+                                                100
+                                            ).toFixed(1)}
+                                            %
                                         </td>
-                                        <td className="td-sm td-text">
-                                            {player.team}
-                                        </td>
-                                        <td className="td-sm td-text">
-                                            {player.age}
-                                        </td>
-                                        <td className="td-sm td-text">
-                                            {player.minutes_played}
-                                        </td>
-                                        <td className="td-sm td-text">
-                                            {player.win_shares}
-                                        </td>
+                                        <td>{player.offensive_win_shares}</td>
+                                        <td>{player.defensive_win_shares}</td>
+                                        <td>{player.win_shares}</td>
                                         <td>
                                             <Button
                                                 className="float-right mb-4 btn-custom"

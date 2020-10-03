@@ -18,6 +18,7 @@ class HomePage extends Component {
             team: [],
             teamWins: 0,
             teamMinutesLeft: 19680,
+            totalShootingPercentage: 0,
             averageAge: 0,
             showTeam: false,
         };
@@ -73,12 +74,15 @@ class HomePage extends Component {
                     year: this.state.nbaYear,
                 })
                 .then((res) => {
+                    console.log("RES", res.data);
                     const { name, position } = selectedPlayer;
                     let pos = position.toLowerCase() + "s";
                     this.setState({
                         team: res.data.players,
                         teamWins: res.data.totalWins.toFixed(1),
                         teamMinutesLeft: res.data.minutesAvailable,
+                        totalShootingPercentage:
+                            res.data.totalShootingPercentage,
                         averageAge: Number.isInteger(res.data.averageAge)
                             ? res.data.averageAge
                             : res.data.averageAge.toFixed(2),
@@ -108,6 +112,7 @@ class HomePage extends Component {
                     team: res.data.players,
                     teamWins: res.data.totalWins.toFixed(1),
                     teamMinutesLeft: res.data.minutesAvailable,
+                    totalShootingPercentage: res.data.totalShootingPercentage,
                     averageAge: Number.isInteger(res.data.averageAge)
                         ? res.data.averageAge
                         : res.data.averageAge.toFixed(2),
@@ -129,6 +134,7 @@ class HomePage extends Component {
             team,
             teamWins,
             teamMinutesLeft,
+            totalShootingPercentage,
             averageAge,
             showTeam,
         } = this.state;
@@ -147,6 +153,7 @@ class HomePage extends Component {
                             team={team}
                             teamWins={teamWins}
                             teamMinutesLeft={teamMinutesLeft}
+                            totalShootingPercentage={totalShootingPercentage}
                             averageAge={averageAge}
                             showTeam={showTeam}
                             toggleShowTeam={this.toggleShowTeam}

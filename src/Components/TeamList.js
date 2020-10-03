@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "reactstrap";
+import { positions } from "../constants";
 
 const TeamList = (props) => {
     const { player, releasePlayer, id } = props;
@@ -15,7 +16,7 @@ const TeamList = (props) => {
                         {player.team.split(" ").slice(-1)[0]}
                     </td>
                     <td>Age: {player.age}</td>
-                    <td>Position: {player.position.replace("_", " ")}</td>
+                    <td>Position: {positions[player.position]}</td>
                     <td>Minutes Played: {player.minutes_played}</td>
                     <td>Win Shares: {player.win_shares}</td>
                     <td>
