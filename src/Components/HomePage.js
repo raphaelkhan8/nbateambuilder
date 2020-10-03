@@ -17,6 +17,8 @@ class HomePage extends Component {
             point_guards: [],
             team: [],
             teamWins: 0,
+            offEfficiency: 0,
+            defEfficiency: 0,
             teamMinutesLeft: 19680,
             totalShootingPercentage: 0,
             averageAge: 0,
@@ -67,6 +69,7 @@ class HomePage extends Component {
     };
 
     addPlayer = (selectedPlayer) => {
+        console.log("SELECTED:", selectedPlayer);
         if (this.state.teamMinutesLeft - selectedPlayer.minutes_played >= 0) {
             axios
                 .post("/addPlayer", {
@@ -74,12 +77,14 @@ class HomePage extends Component {
                     year: this.state.nbaYear,
                 })
                 .then((res) => {
-                    console.log("RES", res.data);
+                    console.log(res.data);
                     const { name, position } = selectedPlayer;
                     let pos = position.toLowerCase() + "s";
                     this.setState({
                         team: res.data.players,
                         teamWins: res.data.totalWins.toFixed(1),
+                        offEfficiency: res.data.offEfficiency,
+                        defEfficiency: res.data.defEfficiency,
                         teamMinutesLeft: res.data.minutesAvailable,
                         totalShootingPercentage:
                             res.data.totalShootingPercentage,
@@ -111,6 +116,8 @@ class HomePage extends Component {
                 this.setState({
                     team: res.data.players,
                     teamWins: res.data.totalWins.toFixed(1),
+                    offEfficiency: res.data.offEfficiency,
+                    defEfficiency: res.data.defEfficiency,
                     teamMinutesLeft: res.data.minutesAvailable,
                     totalShootingPercentage: res.data.totalShootingPercentage,
                     averageAge: Number.isInteger(res.data.averageAge)
@@ -133,6 +140,8 @@ class HomePage extends Component {
             point_guards,
             team,
             teamWins,
+            offEfficiency,
+            defEfficiency,
             teamMinutesLeft,
             totalShootingPercentage,
             averageAge,
@@ -152,6 +161,8 @@ class HomePage extends Component {
                         <Team
                             team={team}
                             teamWins={teamWins}
+                            offEfficiency={offEfficiency}
+                            defEfficiency={defEfficiency}
                             teamMinutesLeft={teamMinutesLeft}
                             totalShootingPercentage={totalShootingPercentage}
                             averageAge={averageAge}

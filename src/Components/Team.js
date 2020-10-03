@@ -8,6 +8,8 @@ const Team = (props) => {
         team,
         teamWins,
         averageAge,
+        offEfficiency,
+        defEfficiency,
         teamMinutesLeft,
         totalShootingPercentage,
         showTeam,
@@ -20,11 +22,18 @@ const Team = (props) => {
                 <h3>Wins: {teamWins}</h3>
                 <h4>Number of Players: {team.length}</h4>
                 <h4>Average Age: {averageAge}</h4>
-                <h4>
-                    True Shooting (TS):{" "}
-                    {(totalShootingPercentage * 100).toFixed(1)}%
+                <h4 title="True Shooting Percentage">
+                    TS%: {(totalShootingPercentage * 100).toFixed(1)}%
                 </h4>
-                <h4>Minutes Left: {teamMinutesLeft}</h4>
+                <h4 title="Percentage that Offense has contributed to win total">
+                    Off Efficiency: {(offEfficiency * 100).toFixed(1)}%
+                </h4>
+                <h4 title="Percentage that Defense has contributed to win total">
+                    Def Efficiency: {(defEfficiency * 100).toFixed(1)}%
+                </h4>
+                <h4 title="Minutes left for adding players (based on 82 game season except 2020-21 (72 games))">
+                    Minutes Left: {teamMinutesLeft}
+                </h4>
             </div>
             {showTeam ? (
                 <div>
