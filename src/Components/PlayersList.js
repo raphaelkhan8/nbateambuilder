@@ -47,8 +47,8 @@ const PlayersList = (props) => {
                                             ).toFixed(1)}
                                             %
                                         </td>
-                                        <td>{player.offensive_win_shares}</td>
-                                        <td>{player.defensive_win_shares}</td>
+                                        <td>{player.off_win_shares}</td>
+                                        <td>{player.def_win_shares}</td>
                                         <td>{player.win_shares}</td>
                                         <td>
                                             <Button

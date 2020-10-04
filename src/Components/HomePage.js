@@ -69,7 +69,6 @@ class HomePage extends Component {
     };
 
     addPlayer = (selectedPlayer) => {
-        console.log("SELECTED:", selectedPlayer);
         if (this.state.teamMinutesLeft - selectedPlayer.minutes_played >= 0) {
             axios
                 .post("/addPlayer", {
@@ -77,7 +76,6 @@ class HomePage extends Component {
                     year: this.state.nbaYear,
                 })
                 .then((res) => {
-                    console.log(res.data);
                     const { name, position } = selectedPlayer;
                     let pos = position.toLowerCase() + "s";
                     this.setState({

@@ -3,8 +3,27 @@ const { constants } = require("../helpers/constants");
 const team = {
     players: [],
     totalMinutesPlayed: 0,
+    offEfficiency: 0,
+    defEfficiency: 0,
     totalWins: 0,
     averageAge: 0,
+};
+
+const adjustEfficiency = (stat, action, player, length) => {
+    if (length > 0) {
+        return action === "add"
+            ? (team[`${stat}Efficiency`] * team.totalWins +
+                  player[`${stat}_win_shares`]) /
+                  (team.totalWins + player.win_shares)
+            : (team[`${stat}Efficiency`] * team.totalWins -
+                  player[`${stat}_win_shares`]) /
+                  (team.totalWins - player.win_shares);
+    } else {
+        return (
+            team.players[0][`${stat}_win_shares`] /
+            (team.totalWins + player.win_shares)
+        );
+    }
 };
 
 const addPlayer = (player, year) => {
@@ -12,7 +31,6 @@ const addPlayer = (player, year) => {
     const numOfPlayers = team.players.length;
     const newTotalMinutesPlayed =
         team.totalMinutesPlayed + player.minutes_played;
-    const newWins = team.totalWins + player.win_shares;
     const season = `${year - 1}-${year} `;
     player = { ...player, season };
     team.players.push(player);
@@ -24,27 +42,16 @@ const addPlayer = (player, year) => {
                   newTotalMinutesPlayed
               ).toFixed(3)
             : player.true_shooting_percentage;
-    team.offEfficiency =
-        numOfPlayers > 0
-            ? (team.offEfficiency * team.totalWins +
-                  player.offensive_win_shares) /
-              newWins
-            : player.offensive_win_shares / player.win_shares;
-    team.defEfficiency =
-        numOfPlayers > 0
-            ? (team.defEfficiency * team.totalWins +
-                  player.defensive_win_shares) /
-              newWins
-            : player.defensive_win_shares / player.win_shares;
+    team.offEfficiency = adjustEfficiency("off", "add", player, numOfPlayers);
+    team.defEfficiency = adjustEfficiency("def", "add", player, numOfPlayers);
     team.totalMinutesPlayed = newTotalMinutesPlayed;
     team.minutesAvailable =
         year !== 2020
             ? maxMinutes - team.totalMinutesPlayed
             : 17280 - team.totalMinutesPlayed;
-    team.totalWins = newWins;
+    team.totalWins += player.win_shares;
     team.averageAge =
         (team.averageAge * numOfPlayers + player.age) / (numOfPlayers + 1);
-    console.log("TEAM:", team);
     return team;
 };
 
@@ -55,7 +62,6 @@ const releasePlayer = (releasedPlayer) => {
         (player) => player.name !== releasedPlayer.name
     );
     const numOfPlayers = team.players.length;
-    const newWins = team.totalWins - releasedPlayer.win_shares;
     team.totalShootingPercentage =
         numOfPlayers > 1
             ? (
@@ -70,20 +76,12 @@ const releasePlayer = (releasedPlayer) => {
     team.totalMinutesPlayed = newTotalMinutesPlayed;
     team.minutesAvailable += releasedPlayer.minutes_played;
     team.offEfficiency =
-        numOfPlayers > 1
-            ? (team.offEfficiency * team.totalWins -
-                  releasedPlayer.offensive_win_shares) /
-              newWins
-            : numOfPlayers > 0
-            ? team.players[0].offensive_win_shares / newWins
+        numOfPlayers > 0
+            ? adjustEfficiency("off", "subtract", releasedPlayer, numOfPlayers)
             : 0;
     team.defEfficiency =
-        numOfPlayers > 1
-            ? (team.defEfficiency * team.totalWins -
-                  releasedPlayer.defensive_win_shares) /
-              newWins
-            : numOfPlayers > 0
-            ? team.players[0].defensive_win_shares / newWins
+        numOfPlayers > 0
+            ? adjustEfficiency("def", "subtract", releasedPlayer, numOfPlayers)
             : 0;
     team.totalWins -= releasedPlayer.win_shares;
     team.averageAge = numOfPlayers
