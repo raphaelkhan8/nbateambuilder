@@ -31,8 +31,8 @@ const groupPlayers = (playerArr) => {
                 minutes_played: player.minutes_played,
                 true_shooting_percentage: player.true_shooting_percentage,
                 win_shares: player.win_shares,
-                defensive_win_shares: player.defensive_win_shares,
-                offensive_win_shares: player.offensive_win_shares,
+                def_win_shares: player.defensive_win_shares,
+                off_win_shares: player.offensive_win_shares,
             };
         })
         .groupBy("position")
