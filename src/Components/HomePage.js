@@ -50,11 +50,6 @@ class HomePage extends Component {
         event.preventDefault();
         const { inputYear } = this.state;
         if (Number(inputYear) >= 2000 && Number(inputYear) <= 2020) {
-            Swal.fire({
-                text: `${
-                    inputYear - 1
-                }-${inputYear} player data is being fetched.`,
-            });
             this.getPlayerList(inputYear);
             this.setState({
                 nbaYear: inputYear,
@@ -69,7 +64,9 @@ class HomePage extends Component {
     };
 
     addPlayer = (selectedPlayer) => {
-        if (this.state.teamMinutesLeft - selectedPlayer.minutes_played >= 0) {
+        const enoughMintues =
+            this.state.teamMinutesLeft - selectedPlayer.minutes_played >= 0;
+        if (enoughMintues) {
             axios
                 .post("/addPlayer", {
                     player: selectedPlayer,
