@@ -23,10 +23,12 @@ const PlayersList = (props) => {
                                 <th>Name</th>
                                 <th>Team</th>
                                 <th title="Player's age during season">Age</th>
-                                <th title="Minutes played during season">
-                                    Minutes Played
-                                </th>
-                                <th title="True Shooting %">TS Percentage</th>
+                                <th title="Minutes played during season">Mins Played</th>
+                                <th title="Games played during season">Games Played</th>
+                                <th title="Points Per Game">PPG</th>
+                                <th title="Assists Per Game">APG</th>
+                                <th title="Rebounds Per Game">RPG</th>
+                                <th title="True Shooting Percentage">TS%</th>
                                 <th title="Offensive Win Shares">Off WS</th>
                                 <th title="Defensive Win Shares">Def WS</th>
                                 <th title="Total Win Shares">Total WS</th>
@@ -39,17 +41,15 @@ const PlayersList = (props) => {
                                         <td>{player.name}</td>
                                         <td>{player.team}</td>
                                         <td>{player.age}</td>
-                                        <td>{player.minutes_played}</td>
-                                        <td>
-                                            {(
-                                                player.true_shooting_percentage *
-                                                100
-                                            ).toFixed(1)}
-                                            %
-                                        </td>
-                                        <td>{player.off_win_shares}</td>
-                                        <td>{player.def_win_shares}</td>
-                                        <td>{player.win_shares}</td>
+                                        <td>{player.minutesPlayed}</td>
+                                        <td>{player.gamesPlayed}</td>
+                                        <td>{(player.points / player.gamesPlayed).toFixed(2)}</td>
+                                        <td>{(player.assists / player.gamesPlayed).toFixed(2)}</td>
+                                        <td>{((player.offensiveRebounds + player.defensiveRebounds) / player.gamesPlayed).toFixed(2)}</td>
+                                        <td>{(player.trueShootingPercentage * 100).toFixed(1)}%</td>
+                                        <td>{player.offWinShares}</td>
+                                        <td>{player.defWinShares}</td>
+                                        <td>{player.winShares}</td>
                                         <td>
                                             <Button
                                                 className="float-right mb-4 btn-custom"

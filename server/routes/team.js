@@ -13,9 +13,9 @@ router.get("/getTeam", (req, res) => {
 });
 
 router.post("/addPlayer", (req, res) => {
-    const { player, year } = req.body;
+    const { player } = req.body;
     if (checkPositionCount(player.position)) {
-        addPlayer(player, Number(year));
+        addPlayer(player);
     }
     res.send(team);
 });
