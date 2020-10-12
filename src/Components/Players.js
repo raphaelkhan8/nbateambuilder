@@ -16,7 +16,9 @@ const Players = (props) => {
             <Switch>
                 <Route path="/point_guards">
                     <h2>POINT GUARDS</h2>
-                    <PlayersList players={point_guards} addPlayer={addPlayer} />
+                    <PlayersList
+                        players={point_guards} 
+                        addPlayer={addPlayer} />
                 </Route>
                 <Route path="/shooting_guards">
                     <h2>SHOOTING GUARDS</h2>
@@ -41,7 +43,9 @@ const Players = (props) => {
                 </Route>
                 <Route path="/centers">
                     <h2>CENTERS</h2>
-                    <PlayersList players={centers} addPlayer={addPlayer} />
+                    <PlayersList
+                        players={centers}
+                        addPlayer={addPlayer} />
                 </Route>
             </Switch>
         </div>

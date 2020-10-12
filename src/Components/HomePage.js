@@ -21,6 +21,12 @@ class HomePage extends Component {
             defEfficiency: 0,
             teamMinutesLeft: 19680,
             totalShootingPercentage: 0,
+            pointsPG: 0,
+            assistsPG: 0,
+            stealsPG: 0,
+            turnoversPG: 0,
+            offRPG: 0,
+            defRPG: 0,
             averageAge: 0,
             showTeam: false,
         };
@@ -49,14 +55,14 @@ class HomePage extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         const { inputYear } = this.state;
-        if (Number(inputYear) >= 2000 && Number(inputYear) <= 2020) {
+        if (Number(inputYear) >= 1998 && Number(inputYear) <= 2020) {
             this.getPlayerList(inputYear);
             this.setState({
                 nbaYear: inputYear,
                 inputYear: "",
             });
         } else {
-            Swal.fire("Please enter a valid year (2000-2020)");
+            Swal.fire("Please enter a valid year (1998-2020)");
             this.setState({
                 inputYear: "",
             });
@@ -65,12 +71,12 @@ class HomePage extends Component {
 
     addPlayer = (selectedPlayer) => {
         const enoughMintues =
-            this.state.teamMinutesLeft - selectedPlayer.minutes_played >= 0;
+            this.state.teamMinutesLeft - selectedPlayer.minutesPlayed >= 0;
         if (enoughMintues) {
+            selectedPlayer.year = this.state.nbaYear;
             axios
                 .post("/addPlayer", {
                     player: selectedPlayer,
-                    year: this.state.nbaYear,
                 })
                 .then((res) => {
                     const { name, position } = selectedPlayer;
@@ -86,6 +92,12 @@ class HomePage extends Component {
                         averageAge: Number.isInteger(res.data.averageAge)
                             ? res.data.averageAge
                             : res.data.averageAge.toFixed(2),
+                        pointsPG: res.data.pointsPG,
+                        assistsPG: res.data.assistsPG,
+                        stealsPG: res.data.stealsPG,
+                        turnoversPG: res.data.turnoversPG,
+                        offRPG: res.data.offensiveReboundsPG,
+                        defRPG: res.data.defensiveReboundsPG,
                         [pos]: this.state[pos].filter(
                             (player) => player.name !== name
                         ),
@@ -118,6 +130,12 @@ class HomePage extends Component {
                     averageAge: Number.isInteger(res.data.averageAge)
                         ? res.data.averageAge
                         : res.data.averageAge.toFixed(2),
+                    pointsPG: res.data.pointsPG,
+                    assistsPG: res.data.assistsPG,
+                    stealsPG: res.data.stealsPG,
+                    turnoversPG: res.data.turnoversPG,
+                    offRPG: res.data.offensiveReboundsPG,
+                    defRPG: res.data.defensiveReboundsPG,
                     [pos]: this.state[pos].concat(selectedPlayer),
                 });
             })
@@ -139,6 +157,12 @@ class HomePage extends Component {
             defEfficiency,
             teamMinutesLeft,
             totalShootingPercentage,
+            pointsPG,
+            assistsPG,
+            stealsPG,
+            turnoversPG,
+            offRPG,
+            defRPG,
             averageAge,
             showTeam,
         } = this.state;
@@ -160,6 +184,12 @@ class HomePage extends Component {
                             defEfficiency={defEfficiency}
                             teamMinutesLeft={teamMinutesLeft}
                             totalShootingPercentage={totalShootingPercentage}
+                            pointsPG={pointsPG}
+                            assistsPG={assistsPG}
+                            stealsPG={stealsPG}
+                            turnoversPG={turnoversPG}
+                            offRPG={offRPG}
+                            defRPG={defRPG}
                             averageAge={averageAge}
                             showTeam={showTeam}
                             toggleShowTeam={this.toggleShowTeam}
@@ -178,7 +208,6 @@ class HomePage extends Component {
                         <Nav />
 
                         <Players
-                            nbaYear={nbaYear}
                             point_guards={point_guards}
                             shooting_guards={shooting_guards}
                             small_forwards={small_forwards}
@@ -189,7 +218,7 @@ class HomePage extends Component {
                     </div>
                 ) : (
                     <div className="instructions">
-                        Enter a year (2000 through 2020) to get the NBA players
+                        Enter a year (1998 through 2020) to get the player stats
                         from that season
                     </div>
                 )}

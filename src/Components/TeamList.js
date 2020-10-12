@@ -17,8 +17,12 @@ const TeamList = (props) => {
                     </td>
                     <td>Age: {player.age}</td>
                     <td>Position: {positions[player.position]}</td>
-                    <td>Minutes Played: {player.minutes_played}</td>
-                    <td>Win Shares: {player.win_shares}</td>
+                    <td>Minutes Played: {player.minutesPlayed}</td>
+                    <td>Games Played: {player.gamesPlayed}</td>
+                    <td>PPG: {(player.points / player.gamesPlayed).toFixed(2)}</td>
+                    <td>APG: {(player.assists / player.gamesPlayed).toFixed(2)}</td>
+                    <td>RPG: {((player.offensiveRebounds + player.defensiveRebounds) / player.gamesPlayed).toFixed(2)}</td>
+                    <td>Win Shares: {player.winShares}</td>
                     <td>
                         <Button
                             onClick={() => {
