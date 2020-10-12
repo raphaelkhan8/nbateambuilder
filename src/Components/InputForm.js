@@ -8,7 +8,7 @@ const InputForm = (props) => {
                 <label>
                     NBA Season:
                     <textarea
-                        placeholder="Input season end-year (2000 - 2020)"
+                        placeholder="Input season end-year (1998 - 2020)"
                         value={inputYear}
                         onChange={handleChange}
                     />
