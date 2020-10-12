@@ -8,12 +8,11 @@ const S3 = new AWS.S3({
 });
 
 const getPlayers = async (year) => {
-    const yearStart = year - 1;
     try {
         const { Body } = await S3.getObject({
             Bucket: bucket,
-            Key: `${yearStart}-${year}_advanced_player_season_totals.json`,
-        }).promise();
+            Key: `${year}_season_totals.json`,
+        }).promise();        
         return JSON.parse(Body.toString("utf-8"));
     } catch (err) {
         console.error(err);
@@ -27,12 +26,18 @@ const groupPlayers = (playerArr) => {
                 age: player.age,
                 name: player.name,
                 team: player.team,
-                position: player.positions[0].replace(/\s+/g, "_"),
+                games_played: player.games_played,
+                position: player.positions.replace(/\s+/g, "_"),
                 minutes_played: player.minutes_played,
-                true_shooting_percentage: player.true_shooting_percentage,
-                win_shares: player.win_shares,
-                def_win_shares: player.defensive_win_shares,
-                off_win_shares: player.offensive_win_shares,
+                points: player.points,
+                assists: player.assists,
+                steals: player.steals,
+                blocks: player.blocks,
+                turnovers: player.turnovers,
+                true_shooting_percentage: player.advanced_stats.true_shooting_percentage,
+                win_shares: player.advanced_stats.win_shares,
+                def_win_shares: player.advanced_stats.defensive_win_shares,
+                off_win_shares: player.advanced_stats.offensive_win_shares,
             };
         })
         .groupBy("position")
