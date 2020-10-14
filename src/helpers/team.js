@@ -40,7 +40,7 @@ const addPlayerToTeam = (player) => {
         numOfPlayers > 1
             ? (
                   (team.totalShootingPercentage * team.totalMinutesPlayed +
-                      player.trueShootingPercentage * player.minutesPlayed).toFixed(12) /
+                      player.trueShootingPercentage * player.minutesPlayed) /
                   newTotalMinutesPlayed
               )
             : player.trueShootingPercentage;
@@ -79,7 +79,7 @@ const releasePlayerFromTeam = (releasedPlayer) => {
             ? (
                   (team.totalShootingPercentage * team.totalMinutesPlayed -
                       releasedPlayer.trueShootingPercentage *
-                          releasedPlayer.minutesPlayed).toFixed(12) /
+                          releasedPlayer.minutesPlayed) /
                   newTotalMinutesPlayed
               )
             : numOfPlayers > 0
@@ -117,16 +117,16 @@ const adjustEfficiency = (stat, action, player) => {
     const numOfPlayers = team.players.length;
     if (numOfPlayers > 0) {
         return action === "add"
-            ? (team[`${stat}Efficiency`] * team.totalWins +
-                  player[`${stat}WinShares`]).toFixed(12) /
-                  (team.totalWins + player.winShares).toFixed(12)
-            : (team[`${stat}Efficiency`] * team.totalWins -
-                  player[`${stat}WinShares`]).toFixed(12) /
-                  (team.totalWins - player.winShares).toFixed(12);
+            ? ((parseFloat((team[`${stat}Efficiency`] * team.totalWins).toFixed(12)) +
+                  player[`${stat}WinShares`]) /
+                  parseFloat((team.totalWins + player.winShares)).toFixed(12))
+            : ((parseFloat((team[`${stat}Efficiency`] * team.totalWins).toFixed(12)) -
+                  player[`${stat}WinShares`]) /
+                  parseFloat((team.totalWins - player.winShares)).toFixed(12));
     } else {
         return (
-            team.players[0][`${stat}WinShares`] /
-            (team.totalWins + player.winShares).toFixed(12)
+            parseFloat((team.players[0][`${stat}WinShares`] /
+            (team.totalWins + player.winShares)).toFixed(12))
         );
     }
 };
