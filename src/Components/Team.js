@@ -25,20 +25,17 @@ const Team = (props) => {
     return (
         <div>
             <div className="team__stats">
-                <h3>Wins: {teamWins}</h3>
+                <h3>Wins: {teamWins.toFixed(1)}</h3>
                 <h4>Number of Players: {team.length}</h4>
-                <h4>Avg Age: {averageAge}</h4>
+                <h4>Avg Age: {Number.isInteger(averageAge) ? averageAge : averageAge.toFixed(2)}</h4>
                 <h4 title="Points Per Game">
                     PPG: {pointsPG.toFixed(2)}
                 </h4>
                 <h4 title="Assists Per Game">
                     APG: {assistsPG.toFixed(2)}
                 </h4>
-                <h4 title="Offensive Rebounds Per Game">
-                    ORPG: {offRPG.toFixed(2)}
-                </h4>
-                <h4 title="Defensive Rebounds Per Game">
-                    DRPG: {defRPG.toFixed(2)}
+                <h4 title={`Total Rebounds Per Game: \nOffensive RPG = ${offRPG.toFixed(2)} \nDefensive RPG = ${defRPG.toFixed(2)}`}>
+                    RPG: {(defRPG + offRPG).toFixed(2)}
                 </h4>
                 <h4 title="Steals Per Game">
                     SPG: {stealsPG.toFixed(2)}

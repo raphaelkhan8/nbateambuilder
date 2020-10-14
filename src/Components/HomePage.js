@@ -69,6 +69,12 @@ class HomePage extends Component {
         }
     };
 
+    handleEnterKey = (event) => {
+        if (event.key === 'Enter') {
+            this.handleSubmit(event);
+        }
+    }
+
     addPlayer = (selectedPlayer) => {
         const enoughMintues =
             this.state.teamMinutesLeft - selectedPlayer.minutesPlayed >= 0;
@@ -83,15 +89,12 @@ class HomePage extends Component {
                     let pos = position.toLowerCase() + "s";
                     this.setState({
                         team: res.data.players,
-                        teamWins: res.data.totalWins.toFixed(1),
+                        teamWins: res.data.totalWins,
                         offEfficiency: res.data.offEfficiency,
                         defEfficiency: res.data.defEfficiency,
                         teamMinutesLeft: res.data.minutesAvailable,
-                        totalShootingPercentage:
-                            res.data.totalShootingPercentage,
-                        averageAge: Number.isInteger(res.data.averageAge)
-                            ? res.data.averageAge
-                            : res.data.averageAge.toFixed(2),
+                        totalShootingPercentage: res.data.totalShootingPercentage,
+                        averageAge: res.data.averageAge,
                         pointsPG: res.data.pointsPG,
                         assistsPG: res.data.assistsPG,
                         stealsPG: res.data.stealsPG,
@@ -122,14 +125,12 @@ class HomePage extends Component {
                 let pos = selectedPlayer.position.toLowerCase() + "s";
                 this.setState({
                     team: res.data.players,
-                    teamWins: res.data.totalWins.toFixed(1),
+                    teamWins: res.data.totalWins,
                     offEfficiency: res.data.offEfficiency,
                     defEfficiency: res.data.defEfficiency,
                     teamMinutesLeft: res.data.minutesAvailable,
                     totalShootingPercentage: res.data.totalShootingPercentage,
-                    averageAge: Number.isInteger(res.data.averageAge)
-                        ? res.data.averageAge
-                        : res.data.averageAge.toFixed(2),
+                    averageAge: res.data.averageAge,
                     pointsPG: res.data.pointsPG,
                     assistsPG: res.data.assistsPG,
                     stealsPG: res.data.stealsPG,
@@ -173,6 +174,7 @@ class HomePage extends Component {
                     inputYear={inputYear}
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
+                    handleEnterKey={this.handleEnterKey}
                 />
                 <h2>My Team</h2>
                 {team.length ? (
