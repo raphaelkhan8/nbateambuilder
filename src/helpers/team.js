@@ -117,16 +117,16 @@ const adjustEfficiency = (stat, action, player) => {
     const numOfPlayers = team.players.length;
     if (numOfPlayers > 0) {
         return action === "add"
-            ? ((parseFloat((team[`${stat}Efficiency`] * team.totalWins).toFixed(12)) +
+            ? parseFloat((team[`${stat}Efficiency`] * team.totalWins +
                   player[`${stat}WinShares`]) /
-                  parseFloat((team.totalWins + player.winShares)).toFixed(12))
-            : ((parseFloat((team[`${stat}Efficiency`] * team.totalWins).toFixed(12)) -
+                  (team.totalWins + player.winShares)).toFixed(12)
+            : parseFloat((team[`${stat}Efficiency`] * team.totalWins -
                   player[`${stat}WinShares`]) /
-                  parseFloat((team.totalWins - player.winShares)).toFixed(12));
+                  (team.totalWins - player.winShares)).toFixed(12);
     } else {
         return (
-            parseFloat((team.players[0][`${stat}WinShares`] /
-            (team.totalWins + player.winShares)).toFixed(12))
+            parseFloat(team.players[0][`${stat}WinShares`] /
+            (team.totalWins + player.winShares)).toFixed(12)
         );
     }
 };
