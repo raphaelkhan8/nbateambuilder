@@ -23,11 +23,13 @@ const PlayersList = (props) => {
                                 <th>Name</th>
                                 <th>Team</th>
                                 <th title="Player's age during season">Age</th>
-                                <th title="Minutes played during season">Mins Played</th>
-                                <th title="Games played during season">Games Played</th>
+                                <th title="Minutes played during season">Minutes</th>
+                                <th title="Games played during season">Games</th>
                                 <th title="Points Per Game">PPG</th>
                                 <th title="Assists Per Game">APG</th>
                                 <th title="Rebounds Per Game">RPG</th>
+                                <th title="Field Goal Percentage">2P%</th>
+                                <th title="3pt Field Goal Percentage">3P%</th>
                                 <th title="True Shooting Percentage">TS%</th>
                                 <th title="Offensive Win Shares">Off WS</th>
                                 <th title="Defensive Win Shares">Def WS</th>
@@ -46,6 +48,8 @@ const PlayersList = (props) => {
                                         <td>{(player.points / player.gamesPlayed).toFixed(2)}</td>
                                         <td>{(player.assists / player.gamesPlayed).toFixed(2)}</td>
                                         <td>{((player.offensiveRebounds + player.defensiveRebounds) / player.gamesPlayed).toFixed(2)}</td>
+                                        <td>{(player.twoPtMade / player.twoPtAttempt * 100).toFixed(1)}%</td>
+                                        <td>{(player.threePtMade / player.threePtAttempt * 100).toFixed(1)}%</td>
                                         <td>{(player.trueShootingPercentage * 100).toFixed(1)}%</td>
                                         <td>{player.offWinShares}</td>
                                         <td>{player.defWinShares}</td>

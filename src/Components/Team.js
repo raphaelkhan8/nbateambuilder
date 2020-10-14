@@ -17,6 +17,10 @@ const Team = (props) => {
         offEfficiency,
         defEfficiency,
         teamMinutesLeft,
+        twoPtMade,
+        twoPtAttempt,
+        threePtMade,
+        threePtAttempt,
         totalShootingPercentage,
         showTeam,
         toggleShowTeam,
@@ -25,9 +29,15 @@ const Team = (props) => {
     return (
         <div>
             <div className="team__stats">
-                <h3>Wins: {teamWins.toFixed(1)}</h3>
-                <h4>Number of Players: {team.length}</h4>
-                <h4>Avg Age: {Number.isInteger(averageAge) ? averageAge : averageAge.toFixed(2)}</h4>
+                <h3 title="Total Team Wins">
+                    Wins: {teamWins.toFixed(1)}
+                </h3>
+                <h4 title="Number of Players">
+                    # of Players: {team.length}
+                </h4>
+                <h4 title="Average Age of Team">
+                    Avg Age: {Number.isInteger(averageAge) ? averageAge : averageAge.toFixed(2)}
+                </h4>
                 <h4 title="Points Per Game">
                     PPG: {pointsPG.toFixed(2)}
                 </h4>
@@ -42,6 +52,12 @@ const Team = (props) => {
                 </h4>
                 <h4 title="Turnovers Per Game">
                     TOPG: {turnoversPG.toFixed(2)}
+                </h4>
+                <h4 title="2pt FG Percentage">
+                    2FG%: {(twoPtMade / twoPtAttempt * 100).toFixed(1)}%
+                </h4>
+                <h4 title="3pt FG Percentage">
+                    3FG%: {(threePtMade / threePtAttempt * 100).toFixed(1)}%
                 </h4>
                 <h4 title="True Shooting Percentage">
                     TS%: {(totalShootingPercentage * 100).toFixed(1)}%

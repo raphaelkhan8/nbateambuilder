@@ -9,6 +9,10 @@ const team = {
     turnoversPG: 0,
     offensiveReboundsPG: 0,
     defensiveReboundsPG: 0,
+    twoPtMade: 0,
+    twoPtAttempt: 0,
+    threePtMade: 0,
+    threePtAttempt: 0,
     offEfficiency: 0,
     defEfficiency: 0,
     totalWins: 0,
@@ -31,6 +35,10 @@ const addPlayer = (player) => {
     team.turnoversPG = addPGstats('turnovers', player);
     team.offensiveReboundsPG = addPGstats('offensiveRebounds', player);
     team.defensiveReboundsPG = addPGstats('defensiveRebounds', player);
+    team.twoPtMade += player.twoPtMade;
+    team.twoPtAttempt += player.twoPtAttempt;
+    team.threePtMade += player.threePtMade;
+    team.threePtAttempt += player.threePtAttempt;
     team.totalShootingPercentage =
         numOfPlayers > 1
             ? (
@@ -65,6 +73,10 @@ const releasePlayer = (releasedPlayer) => {
     team.turnoversPG = reducePGstats('turnovers', releasedPlayer);
     team.offensiveReboundsPG = reducePGstats('offensiveRebounds', releasedPlayer);
     team.defensiveReboundsPG = reducePGstats('defensiveRebounds', releasedPlayer);
+    team.twoPtMade -= releasedPlayer.twoPtMade;
+    team.twoPtAttempt -= releasedPlayer.twoPtAttempt;
+    team.threePtMade -= releasedPlayer.threePtMade;
+    team.threePtAttempt -= releasedPlayer.threePtAttempt;
     team.totalShootingPercentage =
         numOfPlayers > 1
             ? (

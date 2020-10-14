@@ -21,6 +21,10 @@ class HomePage extends Component {
             defEfficiency: 0,
             teamMinutesLeft: 19680,
             totalShootingPercentage: 0,
+            twoPtMade: 0,
+            twoPtAttempt: 0,
+            threePtMade: 0,
+            threePtAttempt: 0,
             pointsPG: 0,
             assistsPG: 0,
             stealsPG: 0,
@@ -107,6 +111,10 @@ class HomePage extends Component {
                     defEfficiency: res.data.defEfficiency,
                     teamMinutesLeft: res.data.minutesAvailable,
                     totalShootingPercentage: res.data.totalShootingPercentage,
+                    twoPtMade: res.data.twoPtMade,
+                    twoPtAttempt: res.data.twoPtAttempt,
+                    threePtMade: res.data.threePtMade,
+                    threePtAttempt: res.data.threePtAttempt,
                     averageAge: res.data.averageAge,
                     pointsPG: res.data.pointsPG,
                     assistsPG: res.data.assistsPG,
@@ -141,6 +149,10 @@ class HomePage extends Component {
                     turnoversPG: res.data.turnoversPG,
                     offRPG: res.data.offensiveReboundsPG,
                     defRPG: res.data.defensiveReboundsPG,
+                    twoPtMade: res.data.twoPtMade,
+                    twoPtAttempt: res.data.twoPtAttempt,
+                    threePtMade: res.data.threePtMade,
+                    threePtAttempt: res.data.threePtAttempt,
                     [pos]: this.state[pos].concat(selectedPlayer),
                 });
             })
@@ -162,6 +174,10 @@ class HomePage extends Component {
             defEfficiency,
             teamMinutesLeft,
             totalShootingPercentage,
+            twoPtMade,
+            twoPtAttempt,
+            threePtMade,
+            threePtAttempt,
             pointsPG,
             assistsPG,
             stealsPG,
@@ -190,6 +206,10 @@ class HomePage extends Component {
                             defEfficiency={defEfficiency}
                             teamMinutesLeft={teamMinutesLeft}
                             totalShootingPercentage={totalShootingPercentage}
+                            twoPtMade={twoPtMade}
+                            twoPtAttempt={twoPtAttempt}
+                            threePtMade={threePtMade}
+                            threePtAttempt={threePtAttempt}
                             pointsPG={pointsPG}
                             assistsPG={assistsPG}
                             stealsPG={stealsPG}
