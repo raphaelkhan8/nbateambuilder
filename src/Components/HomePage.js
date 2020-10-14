@@ -75,47 +75,51 @@ class HomePage extends Component {
         }
     }
 
-    addPlayer = (selectedPlayer) => {
-        const enoughMintues =
-            this.state.teamMinutesLeft - selectedPlayer.minutesPlayed >= 0;
-        if (enoughMintues) {
-            selectedPlayer.year = this.state.nbaYear;
-            axios
-                .post("/addPlayer", {
-                    player: selectedPlayer,
-                })
-                .then((res) => {
-                    const { name, position } = selectedPlayer;
-                    let pos = position.toLowerCase() + "s";
-                    this.setState({
-                        team: res.data.players,
-                        teamWins: res.data.totalWins,
-                        offEfficiency: res.data.offEfficiency,
-                        defEfficiency: res.data.defEfficiency,
-                        teamMinutesLeft: res.data.minutesAvailable,
-                        totalShootingPercentage: res.data.totalShootingPercentage,
-                        averageAge: res.data.averageAge,
-                        pointsPG: res.data.pointsPG,
-                        assistsPG: res.data.assistsPG,
-                        stealsPG: res.data.stealsPG,
-                        turnoversPG: res.data.turnoversPG,
-                        offRPG: res.data.offensiveReboundsPG,
-                        defRPG: res.data.defensiveReboundsPG,
-                        [pos]: this.state[pos].filter(
-                            (player) => player.name !== name
-                        ),
-                    });
-                })
-                .catch((err) => console.error(err));
-        } else {
-            Swal.fire(`Not enough minutes to add ${selectedPlayer.name}`);
-        }
-    };
-
     toggleShowTeam = () => {
         this.setState({
             showTeam: !this.state.showTeam,
         });
+    };
+
+    addPlayer = (selectedPlayer) => {
+        const { name, position } = selectedPlayer;
+        const numOfSamePosition = this.state.team.filter(player => player.position === position).length;
+        const enoughMintues = this.state.teamMinutesLeft - selectedPlayer.minutesPlayed >= 0;
+        if (numOfSamePosition >= 4) {
+            Swal.fire(`You can not add any more ${selectedPlayer.position.replace("_", " ")}S (Max: 4)`);
+            return;
+        }
+        if (!enoughMintues) {
+            Swal.fire(`Not enough minutes to add ${selectedPlayer.name}`);
+            return;
+        }
+        selectedPlayer.year = this.state.nbaYear;
+        axios
+            .post("/addPlayer", {
+                player: selectedPlayer,
+            })
+            .then((res) => {
+                let pos = position.toLowerCase() + "s";
+                this.setState({
+                    team: res.data.players,
+                    teamWins: res.data.totalWins,
+                    offEfficiency: res.data.offEfficiency,
+                    defEfficiency: res.data.defEfficiency,
+                    teamMinutesLeft: res.data.minutesAvailable,
+                    totalShootingPercentage: res.data.totalShootingPercentage,
+                    averageAge: res.data.averageAge,
+                    pointsPG: res.data.pointsPG,
+                    assistsPG: res.data.assistsPG,
+                    stealsPG: res.data.stealsPG,
+                    turnoversPG: res.data.turnoversPG,
+                    offRPG: res.data.offensiveReboundsPG,
+                    defRPG: res.data.defensiveReboundsPG,
+                    [pos]: this.state[pos].filter(
+                        (player) => player.name !== name
+                    ),
+                });
+            })
+            .catch((err) => console.error(err));
     };
 
     releasePlayer = (selectedPlayer) => {
