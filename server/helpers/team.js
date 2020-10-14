@@ -35,9 +35,9 @@ const addPlayer = (player) => {
         numOfPlayers > 1
             ? (
                   (team.totalShootingPercentage * team.totalMinutesPlayed +
-                      player.trueShootingPercentage * player.minutesPlayed) /
+                      player.trueShootingPercentage * player.minutesPlayed).toFixed(12) /
                   newTotalMinutesPlayed
-              ).toFixed(3)
+              )
             : player.trueShootingPercentage;
     team.offEfficiency = adjustEfficiency("off", "add", player);
     team.defEfficiency = adjustEfficiency("def", "add", player);
@@ -70,9 +70,9 @@ const releasePlayer = (releasedPlayer) => {
             ? (
                   (team.totalShootingPercentage * team.totalMinutesPlayed -
                       releasedPlayer.trueShootingPercentage *
-                          releasedPlayer.minutesPlayed) /
+                          releasedPlayer.minutesPlayed).toFixed(12) /
                   newTotalMinutesPlayed
-              ).toFixed(3)
+              )
             : numOfPlayers > 0
             ? team.players[0].trueShootingPercentage
             : 0;
@@ -109,15 +109,15 @@ const adjustEfficiency = (stat, action, player) => {
     if (numOfPlayers > 0) {
         return action === "add"
             ? (team[`${stat}Efficiency`] * team.totalWins +
-                  player[`${stat}WinShares`]) /
-                  (team.totalWins + player.winShares)
+                  player[`${stat}WinShares`]).toFixed(12) /
+                  (team.totalWins + player.winShares).toFixed(12)
             : (team[`${stat}Efficiency`] * team.totalWins -
-                  player[`${stat}WinShares`]) /
-                  (team.totalWins - player.winShares);
+                  player[`${stat}WinShares`]).toFixed(12) /
+                  (team.totalWins - player.winShares).toFixed(12);
     } else {
         return (
             team.players[0][`${stat}WinShares`] /
-            (team.totalWins + player.winShares)
+            (team.totalWins + player.winShares).toFixed(12)
         );
     }
 };
