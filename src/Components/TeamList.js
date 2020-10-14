@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "reactstrap";
-import { positions } from "../constants";
+import { positions } from "../helpers/constants";
 
 const TeamList = (props) => {
     const { player, releasePlayer, id } = props;

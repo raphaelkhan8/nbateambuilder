@@ -1,5 +1,3 @@
-const { constants } = require("../helpers/constants");
-
 const team = {
     players: [],
     totalMinutesPlayed: 0,
@@ -19,8 +17,7 @@ const team = {
     averageAge: 0,
 };
 
-const addPlayer = (player) => {
-    const { maxMinutes } = constants;
+const addPlayerToTeam = (player) => {
     let { year } = player;
     year = Number(year);
     const numOfPlayers = team.players.length;
@@ -52,7 +49,7 @@ const addPlayer = (player) => {
     team.totalMinutesPlayed = newTotalMinutesPlayed;
     team.minutesAvailable =
         year !== 2020
-            ? maxMinutes - team.totalMinutesPlayed
+            ? 19680 - team.totalMinutesPlayed
             : 17280 - team.totalMinutesPlayed;
     team.totalWins += player.winShares;
     team.averageAge =
@@ -60,7 +57,7 @@ const addPlayer = (player) => {
     return team;
 };
 
-const releasePlayer = (releasedPlayer) => {
+const releasePlayerFromTeam = (releasedPlayer) => {
     const newTotalMinutesPlayed =
         team.totalMinutesPlayed - releasedPlayer.minutesPlayed;
     team.players = team.players.filter(
@@ -134,18 +131,4 @@ const adjustEfficiency = (stat, action, player) => {
     }
 };
 
-const checkPositionCount = (position) => {
-    const { maxPositionCount } = constants;
-    let currentNumberOfPosition = team.players.reduce((acc, player) => {
-        if (player.position === position) {
-            acc++;
-        }
-        return acc;
-    }, 0);
-    return currentNumberOfPosition < maxPositionCount;
-};
-
-module.exports.addPlayer = addPlayer;
-module.exports.releasePlayer = releasePlayer;
-module.exports.checkPositionCount = checkPositionCount;
-module.exports.team = team;
+export { addPlayerToTeam, releasePlayerFromTeam }

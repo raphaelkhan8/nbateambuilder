@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 
 import { InputForm, Team, Players, Nav } from "./index";
+import { addPlayerToTeam, releasePlayerFromTeam } from "../helpers/team";
 
 class HomePage extends Component {
     constructor(props) {
@@ -98,65 +99,55 @@ class HomePage extends Component {
             return;
         }
         selectedPlayer.year = this.state.nbaYear;
-        axios
-            .post("/addPlayer", {
-                player: selectedPlayer,
-            })
-            .then((res) => {
-                let pos = position.toLowerCase() + "s";
-                this.setState({
-                    team: res.data.players,
-                    teamWins: res.data.totalWins,
-                    offEfficiency: res.data.offEfficiency,
-                    defEfficiency: res.data.defEfficiency,
-                    teamMinutesLeft: res.data.minutesAvailable,
-                    totalShootingPercentage: res.data.totalShootingPercentage,
-                    twoPtMade: res.data.twoPtMade,
-                    twoPtAttempt: res.data.twoPtAttempt,
-                    threePtMade: res.data.threePtMade,
-                    threePtAttempt: res.data.threePtAttempt,
-                    averageAge: res.data.averageAge,
-                    pointsPG: res.data.pointsPG,
-                    assistsPG: res.data.assistsPG,
-                    stealsPG: res.data.stealsPG,
-                    turnoversPG: res.data.turnoversPG,
-                    offRPG: res.data.offensiveReboundsPG,
-                    defRPG: res.data.defensiveReboundsPG,
-                    [pos]: this.state[pos].filter(
-                        (player) => player.name !== name
-                    ),
-                });
-            })
-            .catch((err) => console.error(err));
+        let pos = position.toLowerCase() + "s";
+        const team = addPlayerToTeam(selectedPlayer);
+        this.setState({
+            team: team.players,
+            teamWins: team.totalWins,
+            offEfficiency: team.offEfficiency,
+            defEfficiency: team.defEfficiency,
+            teamMinutesLeft: team.minutesAvailable,
+            totalShootingPercentage: team.totalShootingPercentage,
+            twoPtMade: team.twoPtMade,
+            twoPtAttempt: team.twoPtAttempt,
+            threePtMade: team.threePtMade,
+            threePtAttempt: team.threePtAttempt,
+            averageAge: team.averageAge,
+            pointsPG: team.pointsPG,
+            assistsPG: team.assistsPG,
+            stealsPG: team.stealsPG,
+            turnoversPG: team.turnoversPG,
+            offRPG: team.offensiveReboundsPG,
+            defRPG: team.defensiveReboundsPG,
+            [pos]: this.state[pos].filter(
+                (player) => player.name !== name
+            ),
+        });
     };
 
     releasePlayer = (selectedPlayer) => {
-        axios
-            .post("/releasePlayer", { player: selectedPlayer })
-            .then((res) => {
-                let pos = selectedPlayer.position.toLowerCase() + "s";
-                this.setState({
-                    team: res.data.players,
-                    teamWins: res.data.totalWins,
-                    offEfficiency: res.data.offEfficiency,
-                    defEfficiency: res.data.defEfficiency,
-                    teamMinutesLeft: res.data.minutesAvailable,
-                    totalShootingPercentage: res.data.totalShootingPercentage,
-                    averageAge: res.data.averageAge,
-                    pointsPG: res.data.pointsPG,
-                    assistsPG: res.data.assistsPG,
-                    stealsPG: res.data.stealsPG,
-                    turnoversPG: res.data.turnoversPG,
-                    offRPG: res.data.offensiveReboundsPG,
-                    defRPG: res.data.defensiveReboundsPG,
-                    twoPtMade: res.data.twoPtMade,
-                    twoPtAttempt: res.data.twoPtAttempt,
-                    threePtMade: res.data.threePtMade,
-                    threePtAttempt: res.data.threePtAttempt,
-                    [pos]: this.state[pos].concat(selectedPlayer),
-                });
-            })
-            .catch((err) => console.error(err));
+        let pos = selectedPlayer.position.toLowerCase() + "s";
+        const team = releasePlayerFromTeam(selectedPlayer);
+        this.setState({
+            team: team.players,
+            teamWins: team.totalWins,
+            offEfficiency: team.offEfficiency,
+            defEfficiency: team.defEfficiency,
+            teamMinutesLeft: team.minutesAvailable,
+            totalShootingPercentage: team.totalShootingPercentage,
+            averageAge: team.averageAge,
+            pointsPG: team.pointsPG,
+            assistsPG: team.assistsPG,
+            stealsPG: team.stealsPG,
+            turnoversPG: team.turnoversPG,
+            offRPG: team.offensiveReboundsPG,
+            defRPG: team.defensiveReboundsPG,
+            twoPtMade: team.twoPtMade,
+            twoPtAttempt: team.twoPtAttempt,
+            threePtMade: team.threePtMade,
+            threePtAttempt: team.threePtAttempt,
+            [pos]: this.state[pos].concat(selectedPlayer),
+        });
     };
 
     render() {
