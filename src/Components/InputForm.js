@@ -1,10 +1,10 @@
 import React from "react";
 
 const InputForm = (props) => {
-    const { inputYear, handleChange, handleSubmit } = props;
+    const { inputYear, handleChange, handleSubmit, handleEnterKey } = props;
     return (
         <div>
-            <form id="inputForm" onSubmit={handleSubmit}>
+            <form id="inputForm" onSubmit={handleSubmit} onKeyPress={handleEnterKey}>
                 <label>
                     NBA Season:
                     <textarea
