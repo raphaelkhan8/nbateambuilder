@@ -77,8 +77,8 @@ const Team = (props) => {
             {showTeam ? (
                 <div>
                     <div className="team-buttons">
+                        <Button onClick={saveTeam}>Save Team</Button>
                         <Button onClick={toggleShowTeam}>Hide Team</Button>
-                        <Button onClick={saveTeam}>Save My Team</Button>
                         <Button onClick={clearTeam}>Clear Team</Button>
                     </div>
                     {team.map((player) => (
@@ -90,7 +90,10 @@ const Team = (props) => {
                     ))}
                 </div>
             ) : (
-                <Button onClick={toggleShowTeam}>Show My Team</Button>
+                <div className="team-buttons">
+                    <Button onClick={toggleShowTeam}>Show Team</Button>
+                    <Button onClick={saveTeam}>Save Team</Button>
+                </div>
             )}
         </div>
     );
