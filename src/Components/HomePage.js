@@ -21,6 +21,7 @@ class HomePage extends Component {
             offEfficiency: 0,
             defEfficiency: 0,
             teamMinutesLeft: 19680,
+            totalMinutesPlayed: 0,
             totalShootingPercentage: 0,
             twoPtMade: 0,
             twoPtAttempt: 0,
@@ -36,6 +37,17 @@ class HomePage extends Component {
             showTeam: false,
             sorted: false,
         };
+    }
+
+    componentDidMount() {
+        const savedState = JSON.parse(localStorage.getItem('savedState')) || {};
+        if (Object.keys(savedState).length) {
+            for (let key in savedState) {
+                this.setState({
+                    [key]: savedState[key]
+                })
+            }
+        }
     }
 
     handleChange = (event) => {
@@ -81,12 +93,6 @@ class HomePage extends Component {
         }
     }
 
-    toggleShowTeam = () => {
-        this.setState({
-            showTeam: !this.state.showTeam,
-        });
-    };
-
     sortPlayers = (stat, position) => {
         const pos = position.toLowerCase() + "s";
         (this.state.sorted === false) ?
@@ -101,6 +107,7 @@ class HomePage extends Component {
     }
 
     addPlayer = (selectedPlayer) => {
+        console.log(this.state);
         const { name, position } = selectedPlayer;
         const numOfSamePosition = this.state.team.filter(player => player.position === position).length;
         const enoughMintues = this.state.teamMinutesLeft - selectedPlayer.minutesPlayed >= 0;
@@ -114,10 +121,10 @@ class HomePage extends Component {
         }
         selectedPlayer.year = this.state.nbaYear;
         let pos = position.toLowerCase() + "s";
-        const team = addPlayerToTeam(selectedPlayer);
+        const team = addPlayerToTeam(selectedPlayer, this.state);
         this.setState({
-            team: team.players,
-            teamWins: team.totalWins,
+            team: team.team,
+            teamWins: team.teamWins,
             offEfficiency: team.offEfficiency,
             defEfficiency: team.defEfficiency,
             teamMinutesLeft: team.minutesAvailable,
@@ -131,8 +138,8 @@ class HomePage extends Component {
             assistsPG: team.assistsPG,
             stealsPG: team.stealsPG,
             turnoversPG: team.turnoversPG,
-            offRPG: team.offensiveReboundsPG,
-            defRPG: team.defensiveReboundsPG,
+            offRPG: team.offRPG,
+            defRPG: team.defRPG,
             [pos]: this.state[pos].filter(
                 (player) => player.name !== name
             ),
@@ -141,10 +148,11 @@ class HomePage extends Component {
 
     releasePlayer = (selectedPlayer) => {
         let pos = selectedPlayer.position.toLowerCase() + "s";
-        const team = releasePlayerFromTeam(selectedPlayer);
+        const team = releasePlayerFromTeam(selectedPlayer, this.state);
+        console.log(team);
         this.setState({
-            team: team.players,
-            teamWins: team.totalWins,
+            team: team.team,
+            teamWins: team.teamWins,
             offEfficiency: team.offEfficiency,
             defEfficiency: team.defEfficiency,
             teamMinutesLeft: team.minutesAvailable,
@@ -154,8 +162,8 @@ class HomePage extends Component {
             assistsPG: team.assistsPG,
             stealsPG: team.stealsPG,
             turnoversPG: team.turnoversPG,
-            offRPG: team.offensiveReboundsPG,
-            defRPG: team.defensiveReboundsPG,
+            offRPG: team.offRPG,
+            defRPG: team.defRPG,
             twoPtMade: team.twoPtMade,
             twoPtAttempt: team.twoPtAttempt,
             threePtMade: team.threePtMade,
@@ -163,6 +171,37 @@ class HomePage extends Component {
             [pos]: this.state[pos].concat(selectedPlayer),
         });
     };
+
+    toggleShowTeam = () => {
+        this.setState({
+            showTeam: !this.state.showTeam,
+        });
+    };
+
+    saveTeam = () => {
+        localStorage.setItem('savedState', JSON.stringify(this.state));
+        Swal.fire('Your team has been saved');
+    }
+
+    clearTeam = () => {
+        Swal.fire({
+            title: 'Are you sure you want to let everyone go?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, fire everybody!'
+        }).then((result) => {
+            localStorage.removeItem('savedState');
+            if (result.isConfirmed) {
+                Swal.fire('Your entire team quit :('
+                ).then(() => {
+                    window.location.reload(false);
+                })
+            }
+        })
+    }
 
     render() {
         const {
@@ -223,6 +262,8 @@ class HomePage extends Component {
                             defRPG={defRPG}
                             averageAge={averageAge}
                             showTeam={showTeam}
+                            saveTeam={this.saveTeam}
+                            clearTeam={this.clearTeam}
                             toggleShowTeam={this.toggleShowTeam}
                             releasePlayer={this.releasePlayer}
                         />

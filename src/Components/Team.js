@@ -23,6 +23,8 @@ const Team = (props) => {
         threePtAttempt,
         totalShootingPercentage,
         showTeam,
+        saveTeam,
+        clearTeam,
         toggleShowTeam,
         releasePlayer,
     } = props;
@@ -74,7 +76,11 @@ const Team = (props) => {
             </div>
             {showTeam ? (
                 <div>
-                    <Button onClick={toggleShowTeam}>Hide My Team</Button>
+                    <div className="team-buttons">
+                        <Button onClick={toggleShowTeam}>Hide Team</Button>
+                        <Button onClick={saveTeam}>Save My Team</Button>
+                        <Button onClick={clearTeam}>Clear Team</Button>
+                    </div>
                     {team.map((player) => (
                         <TeamList
                             id={uuidv4()}

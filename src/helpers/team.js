@@ -1,132 +1,113 @@
-const team = {
-    players: [],
-    totalMinutesPlayed: 0,
-    pointsPG: 0,
-    assistsPG: 0,
-    stealsPG: 0,
-    turnoversPG: 0,
-    offensiveReboundsPG: 0,
-    defensiveReboundsPG: 0,
-    twoPtMade: 0,
-    twoPtAttempt: 0,
-    threePtMade: 0,
-    threePtAttempt: 0,
-    offEfficiency: 0,
-    defEfficiency: 0,
-    totalWins: 0,
-    averageAge: 0,
-};
-
-const addPlayerToTeam = (player) => {
+const addPlayerToTeam = (player, teamInfo) => {
     let { year } = player;
     year = Number(year);
-    const numOfPlayers = team.players.length;
+    const numOfPlayers = teamInfo.team.length;
     const newTotalMinutesPlayed =
-        team.totalMinutesPlayed + player.minutesPlayed;
+        teamInfo.totalMinutesPlayed + player.minutesPlayed;
     const season = `${year - 1}-${year} `;
     player = { ...player, season };
-    team.players.push(player);
-    team.pointsPG = addPGstats('points', player);
-    team.assistsPG = addPGstats('assists', player);
-    team.stealsPG = addPGstats('steals', player);
-    team.turnoversPG = addPGstats('turnovers', player);
-    team.offensiveReboundsPG = addPGstats('offensiveRebounds', player);
-    team.defensiveReboundsPG = addPGstats('defensiveRebounds', player);
-    team.twoPtMade += player.twoPtMade;
-    team.twoPtAttempt += player.twoPtAttempt;
-    team.threePtMade += player.threePtMade;
-    team.threePtAttempt += player.threePtAttempt;
-    team.totalShootingPercentage =
+    teamInfo.team.push(player);
+    teamInfo.pointsPG = addPGstats('points', player, teamInfo);
+    teamInfo.assistsPG = addPGstats('assists', player, teamInfo);
+    teamInfo.stealsPG = addPGstats('steals', player, teamInfo);
+    teamInfo.turnoversPG = addPGstats('turnovers', player, teamInfo);
+    teamInfo.offRPG = addPGstats('offR', player, teamInfo);
+    teamInfo.defRPG = addPGstats('defR', player, teamInfo);
+    teamInfo.twoPtMade += player.twoPtMade;
+    teamInfo.twoPtAttempt += player.twoPtAttempt;
+    teamInfo.threePtMade += player.threePtMade;
+    teamInfo.threePtAttempt += player.threePtAttempt;
+    teamInfo.totalShootingPercentage =
         numOfPlayers > 1
             ? (
-                  (team.totalShootingPercentage * team.totalMinutesPlayed +
+                  (teamInfo.totalShootingPercentage * teamInfo.totalMinutesPlayed +
                       player.trueShootingPercentage * player.minutesPlayed) /
                   newTotalMinutesPlayed
               )
             : player.trueShootingPercentage;
-    team.offEfficiency = adjustEfficiency("off", "add", player);
-    team.defEfficiency = adjustEfficiency("def", "add", player);
-    team.totalMinutesPlayed = newTotalMinutesPlayed;
-    team.minutesAvailable =
+    teamInfo.offEfficiency = adjustEfficiency("off", "add", player, teamInfo);
+    teamInfo.defEfficiency = adjustEfficiency("def", "add", player, teamInfo);
+    teamInfo.totalMinutesPlayed = newTotalMinutesPlayed;
+    teamInfo.minutesAvailable =
         year !== 2020
-            ? 19680 - team.totalMinutesPlayed
-            : 17280 - team.totalMinutesPlayed;
-    team.totalWins += player.winShares;
-    team.averageAge =
-        (team.averageAge * numOfPlayers + player.age) / (numOfPlayers + 1);
-    return team;
+            ? 19680 - teamInfo.totalMinutesPlayed
+            : 17280 - teamInfo.totalMinutesPlayed;
+    teamInfo.teamWins += player.winShares;
+    teamInfo.averageAge =
+        (teamInfo.averageAge * numOfPlayers + player.age) / (numOfPlayers + 1);
+    return teamInfo;
 };
 
-const releasePlayerFromTeam = (releasedPlayer) => {
+const releasePlayerFromTeam = (releasedPlayer, teamInfo) => {
     const newTotalMinutesPlayed =
-        team.totalMinutesPlayed - releasedPlayer.minutesPlayed;
-    team.players = team.players.filter(
+        teamInfo.totalMinutesPlayed - releasedPlayer.minutesPlayed;
+    teamInfo.team = teamInfo.team.filter(
         (player) => player.name !== releasedPlayer.name
     );
-    const numOfPlayers = team.players.length;
-    team.pointsPG = reducePGstats('points', releasedPlayer);
-    team.assistsPG = reducePGstats('assists', releasedPlayer);
-    team.stealsPG = reducePGstats('steals', releasedPlayer);
-    team.turnoversPG = reducePGstats('turnovers', releasedPlayer);
-    team.offensiveReboundsPG = reducePGstats('offensiveRebounds', releasedPlayer);
-    team.defensiveReboundsPG = reducePGstats('defensiveRebounds', releasedPlayer);
-    team.twoPtMade -= releasedPlayer.twoPtMade;
-    team.twoPtAttempt -= releasedPlayer.twoPtAttempt;
-    team.threePtMade -= releasedPlayer.threePtMade;
-    team.threePtAttempt -= releasedPlayer.threePtAttempt;
-    team.totalShootingPercentage =
+    const numOfPlayers = teamInfo.team.length;
+    teamInfo.pointsPG = reducePGstats('points', releasedPlayer, teamInfo);
+    teamInfo.assistsPG = reducePGstats('assists', releasedPlayer, teamInfo);
+    teamInfo.stealsPG = reducePGstats('steals', releasedPlayer, teamInfo);
+    teamInfo.turnoversPG = reducePGstats('turnovers', releasedPlayer, teamInfo);
+    teamInfo.offRPG = reducePGstats('offR', releasedPlayer, teamInfo);
+    teamInfo.defRPG = reducePGstats('defR', releasedPlayer, teamInfo);
+    teamInfo.twoPtMade -= releasedPlayer.twoPtMade;
+    teamInfo.twoPtAttempt -= releasedPlayer.twoPtAttempt;
+    teamInfo.threePtMade -= releasedPlayer.threePtMade;
+    teamInfo.threePtAttempt -= releasedPlayer.threePtAttempt;
+    teamInfo.totalShootingPercentage =
         numOfPlayers > 1
             ? (
-                  (team.totalShootingPercentage * team.totalMinutesPlayed -
+                  (teamInfo.totalShootingPercentage * teamInfo.totalMinutesPlayed -
                       releasedPlayer.trueShootingPercentage *
                           releasedPlayer.minutesPlayed) /
                   newTotalMinutesPlayed
               )
             : numOfPlayers > 0
-            ? team.players[0].trueShootingPercentage
+            ? teamInfo.team[0].trueShootingPercentage
             : 0;
-    team.totalMinutesPlayed = newTotalMinutesPlayed;
-    team.minutesAvailable += releasedPlayer.minutesPlayed;
-    team.offEfficiency =
+    teamInfo.totalMinutesPlayed = newTotalMinutesPlayed;
+    teamInfo.minutesAvailable += releasedPlayer.minutesPlayed;
+    teamInfo.offEfficiency =
         numOfPlayers > 0
-            ? adjustEfficiency("off", "subtract", releasedPlayer)
+            ? adjustEfficiency("off", "subtract", releasedPlayer, teamInfo)
             : 0;
-    team.defEfficiency =
+    teamInfo.defEfficiency =
         numOfPlayers > 0
-            ? adjustEfficiency("def", "subtract", releasedPlayer)
+            ? adjustEfficiency("def", "subtract", releasedPlayer, teamInfo)
             : 0;
-    team.totalWins -= releasedPlayer.winShares;
-    team.averageAge = numOfPlayers
-        ? (team.averageAge * (numOfPlayers + 1) - releasedPlayer.age) /
+    teamInfo.teamWins -= releasedPlayer.winShares;
+    teamInfo.averageAge = numOfPlayers
+        ? (teamInfo.averageAge * (numOfPlayers + 1) - releasedPlayer.age) /
           numOfPlayers
         : 0;
-    return team;
+    return teamInfo;
 };
 
-const addPGstats = (stat, player) => {
+const addPGstats = (stat, player, teamInfo) => {
     const totalGames = (player.year === '2020') ? 72 : 82;
-    return team[`${stat}PG`] += (player[stat] / totalGames);
+    return teamInfo[`${stat}PG`] += (player[stat] / totalGames);
 }
 
-const reducePGstats = (stat, player) => {
+const reducePGstats = (stat, player, teamInfo) => {
     const totalGames = (player.year === '2020') ? 72 : 82;
-    return (team.players.length) ? team[`${stat}PG`] -= (player[stat] / totalGames) : 0;
+    return (teamInfo.team.length) ? teamInfo[`${stat}PG`] -= (player[stat] / totalGames) : 0;
 }
 
-const adjustEfficiency = (stat, action, player) => {
-    const numOfPlayers = team.players.length;
+const adjustEfficiency = (stat, action, player, teamInfo) => {
+    const numOfPlayers = teamInfo.team.length;
     if (numOfPlayers > 0) {
         return action === "add"
-            ? parseFloat((team[`${stat}Efficiency`] * team.totalWins +
+            ? parseFloat((teamInfo[`${stat}Efficiency`] * teamInfo.teamWins +
                   player[`${stat}WinShares`]) /
-                  (team.totalWins + player.winShares)).toFixed(12)
-            : parseFloat((team[`${stat}Efficiency`] * team.totalWins -
+                  (teamInfo.teamWins + player.winShares)).toFixed(12)
+            : parseFloat((teamInfo[`${stat}Efficiency`] * teamInfo.teamWins -
                   player[`${stat}WinShares`]) /
-                  (team.totalWins - player.winShares)).toFixed(12);
+                  (teamInfo.teamWins - player.winShares)).toFixed(12);
     } else {
         return (
-            parseFloat(team.players[0][`${stat}WinShares`] /
-            (team.totalWins + player.winShares)).toFixed(12)
+            parseFloat(teamInfo.team[0][`${stat}WinShares`] /
+            (teamInfo.teamWins + player.winShares)).toFixed(12)
         );
     }
 };

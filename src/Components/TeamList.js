@@ -21,10 +21,11 @@ const TeamList = (props) => {
                     <td>Games Played: {player.gamesPlayed}</td>
                     <td>PPG: {(player.points / player.gamesPlayed).toFixed(2)}</td>
                     <td>APG: {(player.assists / player.gamesPlayed).toFixed(2)}</td>
-                    <td>RPG: {((player.offensiveRebounds + player.defensiveRebounds) / player.gamesPlayed).toFixed(2)}</td>
+                    <td>RPG: {((player.offR + player.defR) / player.gamesPlayed).toFixed(2)}</td>
                     <td>Win Shares: {player.winShares}</td>
                     <td>
                         <Button
+                            title="Released player will reappear at bottom of the player list"
                             onClick={() => {
                                 releasePlayer(player);
                             }}
