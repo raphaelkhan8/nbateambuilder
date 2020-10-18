@@ -34,6 +34,7 @@ class HomePage extends Component {
             defRPG: 0,
             averageAge: 0,
             showTeam: false,
+            sorted: false,
         };
     }
 
@@ -85,6 +86,19 @@ class HomePage extends Component {
             showTeam: !this.state.showTeam,
         });
     };
+
+    sortPlayers = (stat, position) => {
+        const pos = position.toLowerCase() + "s";
+        (this.state.sorted === false) ?
+        this.setState({
+            [pos]: this.state[pos].sort((a, b) => (a[stat] > b[stat]) ? -1 : 1),
+            sorted: true
+        }) :  
+        this.setState({
+            [pos]: this.state[pos].sort((a, b) => (a[stat] > b[stat]) ? 1 : -1),
+            sorted: false
+        })
+    }
 
     addPlayer = (selectedPlayer) => {
         const { name, position } = selectedPlayer;
@@ -231,6 +245,7 @@ class HomePage extends Component {
                             power_forwards={power_forwards}
                             centers={centers}
                             addPlayer={this.addPlayer}
+                            sortPlayers={this.sortPlayers}
                         />
                     </div>
                 ) : (

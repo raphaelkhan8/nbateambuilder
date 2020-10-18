@@ -3,7 +3,7 @@ import { Container, Col, Row, Table, Button } from "reactstrap";
 import { v4 as uuidv4 } from "uuid";
 
 const PlayersList = (props) => {
-    const { players, addPlayer } = props;
+    const { players, addPlayer, sortPlayers } = props;
     return (
         <Container className="mt-4">
             <Row>
@@ -20,20 +20,20 @@ const PlayersList = (props) => {
                     >
                         <thead className="bg-green">
                             <tr>
-                                <th>Name</th>
-                                <th>Team</th>
-                                <th title="Player's age during season">Age</th>
-                                <th title="Minutes played during season">Minutes</th>
-                                <th title="Games played during season">Games</th>
-                                <th title="Points Per Game">PPG</th>
-                                <th title="Assists Per Game">APG</th>
-                                <th title="Rebounds Per Game">RPG</th>
-                                <th title="Field Goal Percentage">2P%</th>
-                                <th title="3pt Field Goal Percentage">3P%</th>
-                                <th title="True Shooting Percentage">TS%</th>
-                                <th title="Offensive Win Shares">Off WS</th>
-                                <th title="Defensive Win Shares">Def WS</th>
-                                <th title="Total Win Shares">Total WS</th>
+                                <th onClick={() => sortPlayers("lastName", players[0].position)}>Name</th>
+                                <th onClick={() => sortPlayers("team", players[0].position)}>Team</th>
+                                <th title="Player's age during season" onClick={() => sortPlayers( "age", players[0].position)}>Age</th>
+                                <th title="Minutes played during season" onClick={() => sortPlayers( "minutesPlayed", players[0].position)}>Minutes</th>
+                                <th title="Games played during season" onClick={() => sortPlayers( "gamesPlayed", players[0].position)}>Games</th>
+                                <th title="Points Per Game" onClick={() => sortPlayers( "points", players[0].position)}>PPG</th>
+                                <th title="Assists Per Game" onClick={() => sortPlayers( "assists", players[0].position)}>APG</th>
+                                <th title="Rebounds Per Game" onClick={() => sortPlayers( "rebounds", players[0].position)}>RPG</th>
+                                <th title="Field Goal Percentage" onClick={() => sortPlayers( "twoPointPercentage", players[0].position)}>2P%</th>
+                                <th title="3pt Field Goal Percentage" onClick={() => sortPlayers( "threePointPercentage", players[0].position)}>3P%</th>
+                                <th title="True Shooting Percentage" onClick={() => sortPlayers( "trueShootingPercentage", players[0].position)}>TS%</th>
+                                <th title="Offensive Win Shares" onClick={() => sortPlayers( "offWinShares", players[0].position)}>Off WS</th>
+                                <th title="Defensive Win Shares" onClick={() => sortPlayers( "defWinShares", players[0].position)}>Def WS</th>
+                                <th title="Total Win Shares" onClick={() => sortPlayers( "winShares", players[0].position)}>Total WS</th>
                             </tr>
                         </thead>
                         <tbody>
