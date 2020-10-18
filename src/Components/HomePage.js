@@ -44,7 +44,8 @@ class HomePage extends Component {
         if (Object.keys(savedState).length) {
             for (let key in savedState) {
                 this.setState({
-                    [key]: savedState[key]
+                    [key]: savedState[key],
+                    showTeam: false
                 })
             }
         }
@@ -107,7 +108,6 @@ class HomePage extends Component {
     }
 
     addPlayer = (selectedPlayer) => {
-        console.log(this.state);
         const { name, position } = selectedPlayer;
         const numOfSamePosition = this.state.team.filter(player => player.position === position).length;
         const enoughMintues = this.state.teamMinutesLeft - selectedPlayer.minutesPlayed >= 0;
@@ -122,54 +122,25 @@ class HomePage extends Component {
         selectedPlayer.year = this.state.nbaYear;
         let pos = position.toLowerCase() + "s";
         const team = addPlayerToTeam(selectedPlayer, this.state);
-        this.setState({
-            team: team.team,
-            teamWins: team.teamWins,
-            offEfficiency: team.offEfficiency,
-            defEfficiency: team.defEfficiency,
-            teamMinutesLeft: team.minutesAvailable,
-            totalShootingPercentage: team.totalShootingPercentage,
-            twoPtMade: team.twoPtMade,
-            twoPtAttempt: team.twoPtAttempt,
-            threePtMade: team.threePtMade,
-            threePtAttempt: team.threePtAttempt,
-            averageAge: team.averageAge,
-            pointsPG: team.pointsPG,
-            assistsPG: team.assistsPG,
-            stealsPG: team.stealsPG,
-            turnoversPG: team.turnoversPG,
-            offRPG: team.offRPG,
-            defRPG: team.defRPG,
-            [pos]: this.state[pos].filter(
-                (player) => player.name !== name
-            ),
-        });
+        for (let key in team) {
+            this.setState({
+                [key]: team[key],
+                [pos]: this.state[pos].filter(
+                    (player) => player.name !== name
+                ),
+            });
+        }
     };
 
     releasePlayer = (selectedPlayer) => {
         let pos = selectedPlayer.position.toLowerCase() + "s";
         const team = releasePlayerFromTeam(selectedPlayer, this.state);
-        console.log(team);
-        this.setState({
-            team: team.team,
-            teamWins: team.teamWins,
-            offEfficiency: team.offEfficiency,
-            defEfficiency: team.defEfficiency,
-            teamMinutesLeft: team.minutesAvailable,
-            totalShootingPercentage: team.totalShootingPercentage,
-            averageAge: team.averageAge,
-            pointsPG: team.pointsPG,
-            assistsPG: team.assistsPG,
-            stealsPG: team.stealsPG,
-            turnoversPG: team.turnoversPG,
-            offRPG: team.offRPG,
-            defRPG: team.defRPG,
-            twoPtMade: team.twoPtMade,
-            twoPtAttempt: team.twoPtAttempt,
-            threePtMade: team.threePtMade,
-            threePtAttempt: team.threePtAttempt,
-            [pos]: this.state[pos].concat(selectedPlayer),
-        });
+        for (let key in team) {
+            this.setState({
+                [key]: team[key],
+                [pos]: this.state[pos].concat(selectedPlayer),
+            });
+        }
     };
 
     toggleShowTeam = () => {

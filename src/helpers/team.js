@@ -28,7 +28,7 @@ const addPlayerToTeam = (player, teamInfo) => {
     teamInfo.offEfficiency = adjustEfficiency("off", "add", player, teamInfo);
     teamInfo.defEfficiency = adjustEfficiency("def", "add", player, teamInfo);
     teamInfo.totalMinutesPlayed = newTotalMinutesPlayed;
-    teamInfo.minutesAvailable =
+    teamInfo.teamMinutesLeft =
         year !== 2020
             ? 19680 - teamInfo.totalMinutesPlayed
             : 17280 - teamInfo.totalMinutesPlayed;
@@ -67,7 +67,7 @@ const releasePlayerFromTeam = (releasedPlayer, teamInfo) => {
             ? teamInfo.team[0].trueShootingPercentage
             : 0;
     teamInfo.totalMinutesPlayed = newTotalMinutesPlayed;
-    teamInfo.minutesAvailable += releasedPlayer.minutesPlayed;
+    teamInfo.teamMinutesLeft += releasedPlayer.minutesPlayed;
     teamInfo.offEfficiency =
         numOfPlayers > 0
             ? adjustEfficiency("off", "subtract", releasedPlayer, teamInfo)

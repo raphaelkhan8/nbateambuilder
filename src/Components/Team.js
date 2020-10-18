@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "reactstrap";
-import { v4 as uuidv4 } from "uuid";
 import TeamList from "./TeamList";
 
 const Team = (props) => {
@@ -28,6 +27,7 @@ const Team = (props) => {
         toggleShowTeam,
         releasePlayer,
     } = props;
+    
     return (
         <div>
             <div className="team__stats">
@@ -70,29 +70,24 @@ const Team = (props) => {
                 <h4 title="Percentage that Defense has contributed to win total">
                     Def Efficiency: {(defEfficiency * 100).toFixed(1)}%
                 </h4>
-                <h4 title="Minutes left for adding players (based on 82 game season except 2020-21 (72 games))">
+                <h4 title={`Based on 82 game season: 19,680 total mins \nNOTE: 2020 season exception: 72 games; 17,280 mins`}>
                     Minutes Left: {teamMinutesLeft}
                 </h4>
             </div>
             {showTeam ? (
                 <div>
-                    <div className="team-buttons">
-                        <Button onClick={saveTeam}>Save Team</Button>
-                        <Button onClick={toggleShowTeam}>Hide Team</Button>
-                        <Button onClick={clearTeam}>Clear Team</Button>
-                    </div>
-                    {team.map((player) => (
-                        <TeamList
-                            id={uuidv4()}
-                            player={player}
-                            releasePlayer={releasePlayer}
-                        />
-                    ))}
+                    <Button className="team-buttons" onClick={saveTeam}>Save Team</Button>
+                    <Button className="team-buttons" onClick={toggleShowTeam}>Hide Team</Button>
+                    <Button className="team-buttons" onClick={clearTeam}>Clear Team</Button>
+                    {<TeamList
+                        players={team}
+                        releasePlayer={releasePlayer}
+                    />}
                 </div>
             ) : (
-                <div className="team-buttons">
-                    <Button onClick={toggleShowTeam}>Show Team</Button>
-                    <Button onClick={saveTeam}>Save Team</Button>
+                <div>
+                    <Button className="team-buttons" onClick={toggleShowTeam}>Show Team</Button>
+                    <Button className="team-buttons" onClick={saveTeam}>Save Team</Button>
                 </div>
             )}
         </div>
