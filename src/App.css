@@ -29,5 +29,11 @@ h4 {
 }
 
 .team__table td {
-    width: calc(100% / 11);
+    width: calc(100% / 14);
+}
+
+.team-buttons {
+    margin-left: 8px;
+    margin-right: 16px;
+    margin-bottom: 16px;
 }
