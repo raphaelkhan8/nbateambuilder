@@ -18,6 +18,9 @@ const TeamList = (props) => {
                     <th title="Points Per Game">PPG</th>
                     <th title="Assists Per Game">APG</th>
                     <th title="Rebounds Per Game">RPG</th>
+                    <th title="Blocks Per Game">BPG</th>
+                    <th title="Steals Per Game">SPG</th>
+                    <th title="Turnovers Per Game">TOPG</th>
                     <th title="Field Goal Percentage">2P%</th>
                     <th title="3pt Field Goal Percentage">3P%</th>
                     <th title="True Shooting Percentage">TS%</th>
@@ -38,7 +41,10 @@ const TeamList = (props) => {
                     <td>{player.gamesPlayed}</td>
                     <td>{(player.points / player.gamesPlayed).toFixed(2)}</td>
                     <td>{(player.assists / player.gamesPlayed).toFixed(2)}</td>
-                    <td>{((player.offR + player.defR) / player.gamesPlayed).toFixed(2)}</td>
+                    <td title={`Off Rebounds: ${(player.offR / player.gamesPlayed).toFixed(2)} \nDef Rebounds: ${(player.defR / player.gamesPlayed).toFixed(2)}`}>{((player.offR + player.defR) / player.gamesPlayed).toFixed(2)}</td>
+                    <td>{(player.blocks / player.gamesPlayed).toFixed(2)}</td>
+                    <td>{(player.steals / player.gamesPlayed).toFixed(2)}</td>
+                    <td>{(player.turnovers / player.gamesPlayed).toFixed(2)}</td>
                     <td>{(player.twoPtMade / player.twoPtAttempt * 100).toFixed(1)}%</td>
                     <td>{(player.threePtMade / player.threePtAttempt * 100).toFixed(1)}%</td>
                     <td>{(player.trueShootingPercentage * 100).toFixed(1)}%</td>

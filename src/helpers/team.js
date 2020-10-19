@@ -10,7 +10,9 @@ const addPlayerToTeam = (player, teamInfo) => {
     teamInfo.pointsPG = addPGstats('points', player, teamInfo);
     teamInfo.assistsPG = addPGstats('assists', player, teamInfo);
     teamInfo.stealsPG = addPGstats('steals', player, teamInfo);
+    teamInfo.blocksPG = addPGstats('blocks', player, teamInfo);
     teamInfo.turnoversPG = addPGstats('turnovers', player, teamInfo);
+    teamInfo.personalFoulsPG = addPGstats('personalFouls', player, teamInfo);
     teamInfo.offRPG = addPGstats('offR', player, teamInfo);
     teamInfo.defRPG = addPGstats('defR', player, teamInfo);
     teamInfo.twoPtMade += player.twoPtMade;
@@ -47,8 +49,10 @@ const releasePlayerFromTeam = (releasedPlayer, teamInfo) => {
     const numOfPlayers = teamInfo.team.length;
     teamInfo.pointsPG = reducePGstats('points', releasedPlayer, teamInfo);
     teamInfo.assistsPG = reducePGstats('assists', releasedPlayer, teamInfo);
+    teamInfo.blocksPG = reducePGstats('blocks', releasedPlayer, teamInfo);
     teamInfo.stealsPG = reducePGstats('steals', releasedPlayer, teamInfo);
     teamInfo.turnoversPG = reducePGstats('turnovers', releasedPlayer, teamInfo);
+    teamInfo.personalFoulsPG = reducePGstats('personalFouls', releasedPlayer, teamInfo);
     teamInfo.offRPG = reducePGstats('offR', releasedPlayer, teamInfo);
     teamInfo.defRPG = reducePGstats('defR', releasedPlayer, teamInfo);
     teamInfo.twoPtMade -= releasedPlayer.twoPtMade;

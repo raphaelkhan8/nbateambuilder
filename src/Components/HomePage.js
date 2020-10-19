@@ -30,7 +30,9 @@ class HomePage extends Component {
             pointsPG: 0,
             assistsPG: 0,
             stealsPG: 0,
+            blocksPG: 0,
             turnoversPG: 0,
+            personalFoulsPG: 0,
             offRPG: 0,
             defRPG: 0,
             averageAge: 0,
@@ -196,7 +198,9 @@ class HomePage extends Component {
             pointsPG,
             assistsPG,
             stealsPG,
+            blocksPG,
             turnoversPG,
+            personalFoulsPG,
             offRPG,
             defRPG,
             averageAge,
@@ -228,7 +232,9 @@ class HomePage extends Component {
                             pointsPG={pointsPG}
                             assistsPG={assistsPG}
                             stealsPG={stealsPG}
+                            blocksPG={blocksPG}
                             turnoversPG={turnoversPG}
+                            personalFoulsPG={personalFoulsPG}
                             offRPG={offRPG}
                             defRPG={defRPG}
                             averageAge={averageAge}

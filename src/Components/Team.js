@@ -9,8 +9,10 @@ const Team = (props) => {
         averageAge,
         pointsPG,
         assistsPG,
+        blocksPG,
         stealsPG,
         turnoversPG,
+        personalFoulsPG,
         offRPG,
         defRPG,
         offEfficiency,
@@ -49,11 +51,17 @@ const Team = (props) => {
                 <h4 title={`Total Rebounds Per Game: \nOffensive RPG = ${offRPG.toFixed(2)} \nDefensive RPG = ${defRPG.toFixed(2)}`}>
                     RPG: {(defRPG + offRPG).toFixed(2)}
                 </h4>
+                <h4 title="Blocks Per Game">
+                    BPG: {blocksPG.toFixed(2)}
+                </h4>
                 <h4 title="Steals Per Game">
                     SPG: {stealsPG.toFixed(2)}
                 </h4>
                 <h4 title="Turnovers Per Game">
                     TOPG: {turnoversPG.toFixed(2)}
+                </h4>
+                <h4 title="Personal Fouls Per Game">
+                    PFPG: {personalFoulsPG.toFixed(2)}
                 </h4>
                 <h4 title="2pt FG Percentage">
                     2FG%: {(twoPtMade / twoPtAttempt * 100).toFixed(1)}%

@@ -35,6 +35,7 @@ const groupPlayers = (playerArr) => {
                 steals: player.steals,
                 blocks: player.blocks,
                 turnovers: player.turnovers,
+                personalFouls: player.personal_fouls,
                 rebounds: player.offensive_rebounds + player.defensive_rebounds,
                 offR: player.offensive_rebounds,
                 defR: player.defensive_rebounds,
