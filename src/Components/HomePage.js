@@ -99,12 +99,17 @@ class HomePage extends Component {
     sortPlayers = (stat, position) => {
         const pos = position.toLowerCase() + "s";
         (this.state.sorted === false) ?
+        (isNaN(typeof this.state[pos][0][stat])) ? 
+            this.setState({
+                [pos]: this.state[pos].sort((a, b) => (a[stat] > b[stat]) ? -1 : 1),
+                sorted: true
+            }) :  
+            this.setState({
+                [pos]: this.state[pos].sort((a, b) => a[stat] - b[stat]),
+                sorted: true
+            }) :
         this.setState({
-            [pos]: this.state[pos].sort((a, b) => (a[stat] > b[stat]) ? -1 : 1),
-            sorted: true
-        }) :  
-        this.setState({
-            [pos]: this.state[pos].sort((a, b) => (a[stat] > b[stat]) ? 1 : -1),
+            [pos]: this.state[pos].reverse(),
             sorted: false
         })
     }
