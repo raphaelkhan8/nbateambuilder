@@ -20,23 +20,23 @@ const PlayersList = (props) => {
                     >
                         <thead className="bg-green">
                             <tr>
-                                <th onClick={() => sortPlayers("lastName", players[0].position)}>Name</th>
-                                <th onClick={() => sortPlayers("team", players[0].position)}>Team</th>
-                                <th title="Player's age during season" onClick={() => sortPlayers("age", players[0].position)}>Age</th>
-                                <th title="Minutes played during season" onClick={() => sortPlayers("minutesPlayed", players[0].position)}>Minutes</th>
-                                <th title="Games played during season" onClick={() => sortPlayers("gamesPlayed", players[0].position)}>Games</th>
-                                <th title="Points Per Game" onClick={() => sortPlayers("points", players[0].position)}>PPG</th>
-                                <th title="Assists Per Game" onClick={() => sortPlayers("assists", players[0].position)}>APG</th>
-                                <th title="Rebounds Per Game" onClick={() => sortPlayers("rebounds", players[0].position)}>RPG</th>
-                                <th title="Blocks Per Game" onClick={() => sortPlayers("blocks", players[0].position)}>BPG</th>
-                                <th title="Steals Per Game" onClick={() => sortPlayers("steals", players[0].position)}>SPG</th>
-                                <th title="Turnovers Per Game" onClick={() => sortPlayers("turnovers", players[0].position)}>TOPG</th>
-                                <th title="Field Goal Percentage" onClick={() => sortPlayers("twoPointPercentage", players[0].position)}>2P%</th>
-                                <th title="3pt Field Goal Percentage" onClick={() => sortPlayers("threePointPercentage", players[0].position)}>3P%</th>
-                                <th title="True Shooting Percentage" onClick={() => sortPlayers("trueShootingPercentage", players[0].position)}>TS%</th>
-                                <th title="Offensive Win Shares" onClick={() => sortPlayers("offWinShares", players[0].position)}>Off WS</th>
-                                <th title="Defensive Win Shares" onClick={() => sortPlayers("defWinShares", players[0].position)}>Def WS</th>
-                                <th title="Total Win Shares" onClick={() => sortPlayers("winShares", players[0].position)}>Total WS</th>
+                                <th>Name <i className="fas fa-sort" onClick={() => sortPlayers("lastName", players[0].position)}></i></th>
+                                <th>Team <i className="fas fa-sort" onClick={() => sortPlayers("team", players[0].position)}></i></th>
+                                <th title="Player's age during season">Age<i className="fas fa-sort" onClick={() => sortPlayers("age", players[0].position)}></i></th>
+                                <th title="Minutes played during season">Mins<i className="fas fa-sort" onClick={() => sortPlayers("minutesPlayed", players[0].position)}></i></th>
+                                <th title="Games played during season">Games<i className="fas fa-sort" onClick={() => sortPlayers("gamesPlayed", players[0].position)}></i></th>
+                                <th title="Points Per Game">PPG<i className="fas fa-sort" onClick={() => sortPlayers("points", players[0].position)}></i></th>
+                                <th title="Assists Per Game">APG<i className="fas fa-sort" onClick={() => sortPlayers("assists", players[0].position)}></i></th>
+                                <th title="Rebounds Per Game">RPG<i className="fas fa-sort" onClick={() => sortPlayers("rebounds", players[0].position)}></i></th>
+                                <th title="Blocks Per Game">BPG<i className="fas fa-sort" onClick={() => sortPlayers("blocks", players[0].position)}></i></th>
+                                <th title="Steals Per Game">SPG<i className="fas fa-sort" onClick={() => sortPlayers("steals", players[0].position)}></i></th>
+                                <th title="Turnovers Per Game">TOPG<i className="fas fa-sort" onClick={() => sortPlayers("turnovers", players[0].position)}></i></th>
+                                <th title="Field Goal Percentage">2P%<i className="fas fa-sort" onClick={() => sortPlayers("twoPointPercentage", players[0].position)}></i></th>
+                                <th title="3pt Field Goal Percentage">3P%<i className="fas fa-sort" onClick={() => sortPlayers("threePointPercentage", players[0].position)}></i></th>
+                                <th title="True Shooting Percentage">TS%<i className="fas fa-sort" onClick={() => sortPlayers("trueShootingPercentage", players[0].position)}></i></th>
+                                <th title="Offensive Win Shares">Off WS<i className="fas fa-sort" onClick={() => sortPlayers("offWinShares", players[0].position)}></i></th>
+                                <th title="Defensive Win Shares">Def WS<i className="fas fa-sort" onClick={() => sortPlayers("defWinShares", players[0].position)}></i></th>
+                                <th title="Total Win Shares">Total WS<i className="fas fa-sort" onClick={() => sortPlayers("winShares", players[0].position)}></i></th>
                             </tr>
                         </thead>
                         <tbody>
